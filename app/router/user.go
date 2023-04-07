@@ -1,15 +1,15 @@
 package router
 
-// import (
-// 	"github.com/adamnasrudin03/my-gram/app/controller"
+import (
+	"github.com/adamnasrudin03/my-gram/app/controller"
 
-// 	"github.com/gin-gonic/gin"
-// )
+	"github.com/gin-gonic/gin"
+)
 
-// func UserRouter(e *gin.Engine, userController controller.UserController) {
-// 	userRoutes := e.Group("/api/v1/auth")
-// 	{
-// 		userRoutes.POST("/register", userController.Register)
-// 		userRoutes.POST("/login", userController.login)
-// 	}
-// }
+func UserRouter(e *gin.Engine, userController controller.UserController) {
+	userRoutes := e.Group("/api/v1/auth")
+	{
+		userRoutes.POST("/register", userController.Register)
+		userRoutes.POST("/login", userController.Login)
+	}
+}

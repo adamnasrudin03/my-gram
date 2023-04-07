@@ -6,6 +6,8 @@ import (
 
 	"github.com/adamnasrudin03/my-gram/app"
 	"github.com/adamnasrudin03/my-gram/app/configs"
+	"github.com/adamnasrudin03/my-gram/app/controller"
+	routers "github.com/adamnasrudin03/my-gram/app/router"
 	"github.com/adamnasrudin03/my-gram/pkg/database"
 	"github.com/adamnasrudin03/my-gram/pkg/helpers"
 
@@ -19,6 +21,8 @@ var (
 
 	repo     = app.WiringRepository(db)
 	services = app.WiringService(repo)
+
+	userController controller.UserController = controller.NewUserController(services)
 )
 
 func main() {
@@ -30,13 +34,14 @@ func main() {
 	router.Use(cors.Default())
 
 	router.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, helpers.APIResponse("welcome its server", http.StatusOK, false, nil))
+		c.JSON(http.StatusOK, helpers.APIResponse("welcome its server", http.StatusOK, "success", nil))
 	})
 
 	// Route here
+	routers.UserRouter(router, userController)
 
 	router.NoRoute(func(c *gin.Context) {
-		c.JSON(http.StatusNotFound, helpers.APIResponse("page not found", http.StatusNotFound, true, nil))
+		c.JSON(http.StatusNotFound, helpers.APIResponse("page not found", http.StatusNotFound, "error", nil))
 	})
 
 	config := configs.GetInstance()
