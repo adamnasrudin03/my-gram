@@ -6,17 +6,17 @@ import (
 
 type Response struct {
 	Code    int         `json:"code"`
-	Error   bool        `json:"error"`
+	Status  string      `json:"status"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data,omitempty"`
 }
 
 // APIResponse is for generating template responses
-func APIResponse(message string, code int, err bool, data interface{}) Response {
+func APIResponse(message string, code int, status string, data interface{}) Response {
 
 	return Response{
 		Code:    code,
-		Error:   err,
+		Status:  status,
 		Message: message,
 		Data:    data,
 	}
