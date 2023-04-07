@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/adamnasrudin03/my-gram/app/dto"
-	"github.com/adamnasrudin03/my-gram/app/entity"
 	"github.com/adamnasrudin03/my-gram/app/service"
 	"github.com/adamnasrudin03/my-gram/pkg/helpers"
 
@@ -26,10 +25,18 @@ func NewUserController(srv *service.Services) UserController {
 	}
 }
 
+// Register godoc
+// @Summary Register User
+// @Description Register new User
+// @Tags json
+// @Accept json
+// @Produce json
+// @Param dto.RegisterReq body dto.RegisterReq true "Register User"
+// @Success 201 {object} entity.User
+// @Router /api/v1/auth/register [post]
 func (c *userController) Register(ctx *gin.Context) {
-	var input entity.User
+	var input dto.RegisterReq
 
-	//Validation input user
 	err := ctx.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helpers.FormatValidationError(err)
@@ -39,15 +46,24 @@ func (c *userController) Register(ctx *gin.Context) {
 		return
 	}
 
-	_, err = c.Service.User.Register(input)
+	response, err := c.Service.User.Register(input)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, helpers.APIResponse("there was an error register new user", http.StatusBadRequest, err.Error(), nil))
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, helpers.APIResponse("user registered", http.StatusCreated, "success", nil))
+	ctx.JSON(http.StatusCreated, helpers.APIResponse("user registered", http.StatusCreated, "success", response))
 }
 
+// Login godoc
+// @Summary Login User
+// @Description Login User
+// @Tags json
+// @Accept json
+// @Produce json
+// @Param dto.LoginReq body dto.LoginReq true "Login User"
+// @Success 200 {object} dto.LoginRes
+// @Router /api/v1/auth/login [post]
 func (c *userController) Login(ctx *gin.Context) {
 	var (
 		input    dto.LoginReq

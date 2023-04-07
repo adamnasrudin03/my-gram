@@ -9,7 +9,9 @@ import (
 func UserRouter(e *gin.Engine, userController controller.UserController) {
 	userRoutes := e.Group("/api/v1/auth")
 	{
+		// Create
 		userRoutes.POST("/register", userController.Register)
+		// Create
 		userRoutes.POST("/login", userController.Login)
 	}
 }
