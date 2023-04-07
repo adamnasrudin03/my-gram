@@ -8,3 +8,9 @@ type ResponseList struct {
 	LastPage uint64      `json:"last_page"`
 	Data     interface{} `json:"data"`
 }
+
+type ListParam struct {
+	Page   uint64 `json:"page" validate:"required"`
+	Limit  uint64 `json:"limit" validate:"required"`
+	Offset uint64 `json:"offset"`
+}
