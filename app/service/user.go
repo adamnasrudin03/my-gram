@@ -10,7 +10,7 @@ import (
 )
 
 type UserService interface {
-	Register(input entity.User) (res entity.User, err error)
+	Register(input dto.RegisterReq) (res entity.User, err error)
 	Login(input dto.LoginReq) (token string, err error)
 }
 
@@ -24,12 +24,21 @@ func NewUserService(UserRepo repository.UserRepository) UserService {
 	}
 }
 
-func (srv *userService) Register(input entity.User) (res entity.User, err error) {
-	res, err = srv.userRepository.Register(input)
+func (srv *userService) Register(input dto.RegisterReq) (res entity.User, err error) {
+	user := entity.User{
+		Username: input.Username,
+		Password: input.Password,
+		Email:    input.Email,
+		Age:      input.Age,
+	}
+
+	res, err = srv.userRepository.Register(user)
 	if err != nil {
 		log.Printf("[UserService-Register] error create data: %+v \n", err)
 		return
 	}
+
+	res.Password = ""
 
 	return
 }
