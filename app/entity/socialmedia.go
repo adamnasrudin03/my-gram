@@ -1,5 +1,6 @@
 package entity
 
+// SocialMedia represents the model for an social media
 type SocialMedia struct {
 	ID             uint64 `gorm:"primaryKey" json:"id"`
 	UserID         uint64 `json:"user_id"`

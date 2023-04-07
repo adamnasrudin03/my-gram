@@ -1,5 +1,6 @@
 package entity
 
+// Photo represents the model for an photo
 type Photo struct {
 	ID       uint64 `gorm:"primaryKey" json:"id"`
 	UserID   uint64 `json:"user_id"`
