@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/adamnasrudin03/my-gram/app/configs"
+	"github.com/adamnasrudin03/my-gram/app/entity"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -33,7 +34,10 @@ func SetupDbConnection() *gorm.DB {
 	if configs.Dbconfig.DbIsMigrate {
 		//auto migration entity db
 		db.AutoMigrate(
-		// &entity.Transaction{},
+			&entity.User{},
+			&entity.Photo{},
+			&entity.SocialMedia{},
+			&entity.Comment{},
 		)
 	}
 
