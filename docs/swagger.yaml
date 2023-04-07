@@ -1,0 +1,97 @@
+basePath: /
+definitions:
+  dto.LoginReq:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.LoginRes:
+    properties:
+      token:
+        type: string
+    type: object
+  dto.RegisterReq:
+    properties:
+      age:
+        type: integer
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  entity.User:
+    properties:
+      age:
+        type: integer
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: admin@mail.me
+    name: API Support
+  description: Service to manage MyGram data
+  termsOfService: https://google.com
+  title: My Gram API
+  version: "1.0"
+paths:
+  /api/v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login User
+      parameters:
+      - description: Login User
+        in: body
+        name: dto.LoginReq
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.LoginRes'
+      summary: Login User
+      tags:
+      - json
+  /api/v1/auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register new User
+      parameters:
+      - description: Register User
+        in: body
+        name: dto.RegisterReq
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RegisterReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.User'
+      summary: Register User
+      tags:
+      - json
+swagger: "2.0"
