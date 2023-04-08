@@ -45,7 +45,7 @@ func (repo *userRepo) Login(input dto.LoginReq) (res entity.User, err error) {
 
 	if !helpers.PasswordValid(res.Password, input.Password) {
 		err = errors.New("invalid password")
-		log.Printf("[UserRepository-Login] error ogin: %+v \n", err)
+		log.Printf("[UserRepository-Login] error cek pass: %+v \n", err)
 		return
 	}
 	return

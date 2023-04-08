@@ -9,6 +9,8 @@ import (
 	"adamnasrudin03/my-gram/app/entity"
 	"adamnasrudin03/my-gram/app/repository"
 	"adamnasrudin03/my-gram/pkg/helpers"
+
+	"gorm.io/gorm"
 )
 
 type UserService interface {
@@ -38,14 +40,14 @@ func (srv *userService) Register(input dto.RegisterReq) (res entity.User, status
 	if checkUser.Email != "" {
 		err = errors.New("email user has be registered")
 		log.Printf("[UserService-Register] error check email: %+v \n", err)
-		return res, http.StatusBadRequest, err
+		return res, http.StatusConflict, err
 	}
 
 	checkUser, _ = srv.userRepository.GetByUsername(user.Username)
 	if checkUser.Username != "" {
 		err = errors.New("username user has be registered")
 		log.Printf("[UserService-Register] error check username: %+v \n", err)
-		return res, http.StatusBadRequest, err
+		return res, http.StatusConflict, err
 	}
 
 	res, err = srv.userRepository.Register(user)
@@ -61,6 +63,10 @@ func (srv *userService) Register(input dto.RegisterReq) (res entity.User, status
 
 func (srv *userService) Login(input dto.LoginReq) (res dto.LoginRes, statusCode int, err error) {
 	user, err := srv.userRepository.Login(input)
+	if errors.Is(err, gorm.ErrRecordNotFound) || user.ID == 0 {
+		return res, http.StatusNotFound, err
+	}
+
 	if err != nil {
 		log.Printf("[UserService-Login] error: %+v \n", err)
 		return res, http.StatusInternalServerError, err
