@@ -47,6 +47,13 @@ definitions:
       total_data:
         type: integer
     type: object
+  dto.SocialMediaUpdateReq:
+    properties:
+      name:
+        type: string
+      social_media_url:
+        type: string
+    type: object
   entity.SocialMedia:
     properties:
       created_at:
@@ -199,6 +206,33 @@ paths:
           schema:
             $ref: '#/definitions/entity.SocialMedia'
       summary: GetOne SocialMedia
+      tags:
+      - Social Media
+  /api/v1/social-media/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update  SocialMedia
+      parameters:
+      - description: Update SocialMedia
+        in: body
+        name: dto.SocialMediaUpdateReq
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SocialMediaUpdateReq'
+      - description: Social Media ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.SocialMedia'
+      summary: UpdateSocialMedia
       tags:
       - Social Media
 swagger: "2.0"

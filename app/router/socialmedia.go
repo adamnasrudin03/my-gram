@@ -15,5 +15,7 @@ func SocialMediaRouter(e *gin.Engine, h controller.SocialMediaController) {
 		socialMediaRoutes.GET("/", h.GetAll)
 		// Get
 		socialMediaRoutes.GET("/{id}", h.GetOne)
+		// Update
+		socialMediaRoutes.PUT("/{id}", h.UpdateSocialMedia)
 	}
 }

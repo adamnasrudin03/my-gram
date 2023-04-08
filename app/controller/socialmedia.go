@@ -16,6 +16,7 @@ type SocialMediaController interface {
 	CreateSocialMedia(ctx *gin.Context)
 	GetAll(ctx *gin.Context)
 	GetOne(ctx *gin.Context)
+	UpdateSocialMedia(ctx *gin.Context)
 }
 
 type socialMediaHandler struct {
@@ -136,4 +137,41 @@ func (c *socialMediaHandler) GetOne(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, res)
+}
+
+// UpdateSocialMedia godoc
+// @Summary UpdateSocialMedia
+// @Description Update  SocialMedia
+// @Tags Social Media
+// @Accept json
+// @Produce json
+// @Param dto.SocialMediaUpdateReq body dto.SocialMediaUpdateReq true "Update SocialMedia"
+// @Param id path uint64 true "Social Media ID"
+// @Success 200 {object} entity.SocialMedia
+// @Router /api/v1/social-media/{id} [put]
+func (c *socialMediaHandler) UpdateSocialMedia(ctx *gin.Context) {
+	var (
+		input dto.SocialMediaUpdateReq
+	)
+
+	ID, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
+	if err != nil {
+		err = errors.New("invalid parameter id")
+		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(err.Error(), http.StatusBadRequest, "error"))
+		return
+	}
+
+	err = ctx.ShouldBindJSON(&input)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(err.Error(), http.StatusBadRequest, "error"))
+		return
+	}
+
+	SocialMediaRes, httpStatus, err := c.Service.SocialMedia.UpdateByID(ID, input)
+	if err != nil {
+		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error"))
+		return
+	}
+
+	ctx.JSON(httpStatus, SocialMediaRes)
 }

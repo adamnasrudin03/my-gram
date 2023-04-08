@@ -157,6 +157,47 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/social-media/{id}": {
+            "put": {
+                "description": "Update  SocialMedia",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Social Media"
+                ],
+                "summary": "UpdateSocialMedia",
+                "parameters": [
+                    {
+                        "description": "Update SocialMedia",
+                        "name": "dto.SocialMediaUpdateReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SocialMediaUpdateReq"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Social Media ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/entity.SocialMedia"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/social-media/{{id}}": {
             "get": {
                 "description": "GetOne SocialMedia",
@@ -261,6 +302,17 @@ const docTemplate = `{
                 },
                 "total_data": {
                     "type": "integer"
+                }
+            }
+        },
+        "dto.SocialMediaUpdateReq": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "social_media_url": {
+                    "type": "string"
                 }
             }
         },
