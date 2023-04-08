@@ -14,7 +14,7 @@ import (
 )
 
 type SocialMediaService interface {
-	Create(input dto.SocialMediaCreateReq) (res entity.SocialMedia, statusCode int, err error)
+	Create(input entity.SocialMedia) (res entity.SocialMedia, statusCode int, err error)
 	GetAll(ctx *gin.Context, queryparam dto.ListParam) (result dto.SocialMediaListRes, statusCode int, err error)
 	GetByID(ID uint64) (result entity.SocialMedia, statusCode int, err error)
 	UpdateByID(ID uint64, input dto.SocialMediaUpdateReq) (result entity.SocialMedia, statusCode int, err error)
@@ -31,14 +31,8 @@ func NewSocialMediaService(SocialMediaRepo repository.SocialMediaRepository) Soc
 	}
 }
 
-func (srv *socialMediaSrv) Create(input dto.SocialMediaCreateReq) (res entity.SocialMedia, statusCode int, err error) {
-	socialMedia := entity.SocialMedia{
-		UserID:         input.UserID,
-		Name:           input.Name,
-		SocialMediaUrl: input.SocialMediaUrl,
-	}
-
-	res, err = srv.SocialMediaRepository.Create(socialMedia)
+func (srv *socialMediaSrv) Create(input entity.SocialMedia) (res entity.SocialMedia, statusCode int, err error) {
+	res, err = srv.SocialMediaRepository.Create(input)
 	if err != nil {
 		log.Printf("[SocialMediaService-Create] error create data: %+v \n", err)
 		return res, http.StatusInternalServerError, err

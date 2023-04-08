@@ -2,6 +2,7 @@ package controller
 
 import (
 	"adamnasrudin03/my-gram/app/dto"
+	"adamnasrudin03/my-gram/app/entity"
 	"adamnasrudin03/my-gram/app/service"
 	"adamnasrudin03/my-gram/pkg/helpers"
 	"errors"
@@ -62,8 +63,13 @@ func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
 		return
 	}
 
-	input.UserID = uint64(userData["id"].(float64))
-	SocialMediaRes, httpStatus, err := c.Service.SocialMedia.Create(input)
+	socialMedia := entity.SocialMedia{
+		UserID:         uint64(userData["id"].(float64)),
+		Name:           input.Name,
+		SocialMediaUrl: input.SocialMediaUrl,
+	}
+
+	SocialMediaRes, httpStatus, err := c.Service.SocialMedia.Create(socialMedia)
 	if err != nil {
 		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error"))
 		return

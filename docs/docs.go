@@ -294,6 +294,10 @@ const docTemplate = `{
     "definitions": {
         "dto.LoginReq": {
             "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
             "properties": {
                 "password": {
                     "type": "string"
@@ -313,15 +317,23 @@ const docTemplate = `{
         },
         "dto.RegisterReq": {
             "type": "object",
+            "required": [
+                "age",
+                "email",
+                "password",
+                "username"
+            ],
             "properties": {
                 "age": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 8
                 },
                 "email": {
                     "type": "string"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 4
                 },
                 "username": {
                     "type": "string"
@@ -330,15 +342,16 @@ const docTemplate = `{
         },
         "dto.SocialMediaCreateReq": {
             "type": "object",
+            "required": [
+                "name",
+                "social_media_url"
+            ],
             "properties": {
                 "name": {
                     "type": "string"
                 },
                 "social_media_url": {
                     "type": "string"
-                },
-                "user_id": {
-                    "type": "integer"
                 }
             }
         },
@@ -367,6 +380,10 @@ const docTemplate = `{
         },
         "dto.SocialMediaUpdateReq": {
             "type": "object",
+            "required": [
+                "name",
+                "social_media_url"
+            ],
             "properties": {
                 "name": {
                     "type": "string"

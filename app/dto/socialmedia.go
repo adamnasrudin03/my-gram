@@ -3,7 +3,6 @@ package dto
 import "adamnasrudin03/my-gram/app/entity"
 
 type SocialMediaCreateReq struct {
-	UserID         uint64 `json:"user_id"`
 	Name           string `json:"name" validate:"required"`
 	SocialMediaUrl string `json:"social_media_url" validate:"required"`
 }
