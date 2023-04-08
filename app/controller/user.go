@@ -32,7 +32,7 @@ func NewUserController(srv *service.Services) UserController {
 // @Accept json
 // @Produce json
 // @Param dto.RegisterReq body dto.RegisterReq true "Register User"
-// @Success 201 {object} dto.RegisterRes
+// @Success 201 {object} entity.User
 // @Router /api/v1/auth/register [post]
 func (c *userController) Register(ctx *gin.Context) {
 	var (
