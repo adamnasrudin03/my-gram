@@ -8,6 +8,7 @@ import (
 	"adamnasrudin03/my-gram/pkg/helpers"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
 type UserController interface {
@@ -38,8 +39,14 @@ func (c *userController) Register(ctx *gin.Context) {
 	var (
 		input dto.RegisterReq
 	)
-
+	validate := validator.New()
 	err := ctx.ShouldBindJSON(&input)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(err.Error(), http.StatusBadRequest, "error"))
+		return
+	}
+
+	err = validate.Struct(input)
 	if err != nil {
 		errors := helpers.FormatValidationError(err)
 
@@ -70,10 +77,18 @@ func (c *userController) Login(ctx *gin.Context) {
 		input dto.LoginReq
 	)
 
-	//Validation input user
+	validate := validator.New()
 	err := ctx.ShouldBindJSON(&input)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(err.Error(), http.StatusBadRequest, "error"))
+		return
+	}
+
+	err = validate.Struct(input)
+	if err != nil {
+		errors := helpers.FormatValidationError(err)
+
+		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(errors, http.StatusBadRequest, "error"))
 		return
 	}
 

@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt"
 )
 
@@ -44,9 +45,16 @@ func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
 	var (
 		input dto.SocialMediaCreateReq
 	)
-
 	userData := ctx.MustGet("userData").(jwt.MapClaims)
+	validate := validator.New()
+
 	err := ctx.ShouldBindJSON(&input)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(err.Error(), http.StatusBadRequest, "error"))
+		return
+	}
+
+	err = validate.Struct(input)
 	if err != nil {
 		errors := helpers.FormatValidationError(err)
 
@@ -163,9 +171,18 @@ func (c *socialMediaHandler) UpdateSocialMedia(ctx *gin.Context) {
 		return
 	}
 
+	validate := validator.New()
 	err = ctx.ShouldBindJSON(&input)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(err.Error(), http.StatusBadRequest, "error"))
+		return
+	}
+
+	err = validate.Struct(input)
+	if err != nil {
+		errors := helpers.FormatValidationError(err)
+
+		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(errors, http.StatusBadRequest, "error"))
 		return
 	}
 

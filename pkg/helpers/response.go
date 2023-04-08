@@ -1,6 +1,9 @@
 package helpers
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/go-playground/validator/v10"
 )
 
@@ -25,9 +28,21 @@ func FormatValidationError(err error) string {
 	var errors string
 
 	for _, e := range err.(validator.ValidationErrors) {
-		errors = e.Error()
-		return errors
+		if errors != "" {
+			errors = fmt.Sprintf("%v, ", strings.TrimSpace(errors))
+		}
+
+		if e.Tag() == "email" {
+			errors = errors + fmt.Sprintf("%v must be type %v", e.Field(), e.Tag())
+		} else {
+			errors = errors + fmt.Sprintf("%v is %v %v", e.Field(), e.Tag(), e.Param())
+		}
+
+		if e.Param() != "" && e.Type().Name() == "string" {
+			errors = errors + " character"
+		}
+
 	}
 
-	return errors
+	return strings.TrimSpace(errors) + "."
 }

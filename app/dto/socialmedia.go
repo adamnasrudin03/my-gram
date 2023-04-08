@@ -4,8 +4,8 @@ import "adamnasrudin03/my-gram/app/entity"
 
 type SocialMediaCreateReq struct {
 	UserID         uint64 `json:"user_id"`
-	Name           string `json:"name"`
-	SocialMediaUrl string `json:"social_media_url"`
+	Name           string `json:"name" validate:"required"`
+	SocialMediaUrl string `json:"social_media_url" validate:"required"`
 }
 
 type SocialMediaListRes struct {
@@ -14,6 +14,6 @@ type SocialMediaListRes struct {
 }
 
 type SocialMediaUpdateReq struct {
-	Name           string `json:"name"`
-	SocialMediaUrl string `json:"social_media_url"`
+	Name           string `json:"name" validate:"required"`
+	SocialMediaUrl string `json:"social_media_url" validate:"required"`
 }
