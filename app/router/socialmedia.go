@@ -10,7 +10,7 @@ func SocialMediaRouter(e *gin.Engine, h controller.SocialMediaController) {
 	socialMediaRoutes := e.Group("/api/v1/social-media")
 	{
 		// Create
-		socialMediaRoutes.POST("/", h.Create)
+		socialMediaRoutes.POST("/", h.CreateSocialMedia)
 		// Get
 		socialMediaRoutes.GET("/", h.GetAll)
 		// Get

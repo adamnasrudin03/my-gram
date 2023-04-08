@@ -132,7 +132,7 @@ const docTemplate = `{
                 "tags": [
                     "Social Media"
                 ],
-                "summary": "Create SocialMedia",
+                "summary": "CreateSocialMedia",
                 "parameters": [
                     {
                         "description": "Create SocialMedia",

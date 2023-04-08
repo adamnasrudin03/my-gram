@@ -13,7 +13,7 @@ import (
 )
 
 type SocialMediaController interface {
-	Create(ctx *gin.Context)
+	CreateSocialMedia(ctx *gin.Context)
 	GetAll(ctx *gin.Context)
 	GetOne(ctx *gin.Context)
 }
@@ -28,8 +28,8 @@ func NewSocialMediaController(srv *service.Services) SocialMediaController {
 	}
 }
 
-// Create godoc
-// @Summary Create SocialMedia
+// CreateSocialMedia godoc
+// @Summary CreateSocialMedia
 // @Description Create new SocialMedia
 // @Tags Social Media
 // @Accept json
@@ -37,7 +37,7 @@ func NewSocialMediaController(srv *service.Services) SocialMediaController {
 // @Param dto.SocialMediaCreateReq body dto.SocialMediaCreateReq true "Create SocialMedia"
 // @Success 201 {object} entity.SocialMedia
 // @Router /api/v1/social-media [post]
-func (c *socialMediaHandler) Create(ctx *gin.Context) {
+func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
 	var (
 		input dto.SocialMediaCreateReq
 	)
