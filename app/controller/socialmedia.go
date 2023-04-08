@@ -9,11 +9,13 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 type SocialMediaController interface {
 	Create(ctx *gin.Context)
 	GetAll(ctx *gin.Context)
+	GetOne(ctx *gin.Context)
 }
 
 type socialMediaHandler struct {
@@ -102,5 +104,35 @@ func (c *socialMediaHandler) GetAll(ctx *gin.Context) {
 		return
 	}
 
+	ctx.JSON(http.StatusOK, res)
+}
+
+// GetOne godoc
+// @Summary GetOne SocialMedia
+// @Description GetOne SocialMedia
+// @Tags Social Media
+// @Accept json
+// @Produce json
+// @Param id path uint64 true "Social Media ID"
+// @Success 201 {object} entity.SocialMedia
+// @Router /api/v1/social-media/{{id}} [GET]
+func (c *socialMediaHandler) GetOne(ctx *gin.Context) {
+	ID, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
+	if err != nil {
+		err = errors.New("invalid parameter id")
+		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(err.Error(), http.StatusBadRequest, "error"))
+		return
+	}
+
+	res, err := c.Service.SocialMedia.GetByID(ID)
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		ctx.JSON(http.StatusNotFound, helpers.APIResponse(err.Error(), http.StatusNotFound, "error"))
+		return
+	}
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, helpers.APIResponse(err.Error(), http.StatusInternalServerError, "error"))
+		return
+	}
 	ctx.JSON(http.StatusOK, res)
 }

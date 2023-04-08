@@ -13,6 +13,7 @@ import (
 type SocialMediaService interface {
 	Create(input dto.SocialMediaCreateReq) (res entity.SocialMedia, err error)
 	GetAll(ctx *gin.Context, queryparam dto.ListParam) (result dto.SocialMediaListRes, err error)
+	GetByID(ID uint64) (result entity.SocialMedia, err error)
 }
 
 type socialMediaSrv struct {
@@ -52,6 +53,16 @@ func (srv *socialMediaSrv) GetAll(ctx *gin.Context, queryparam dto.ListParam) (r
 	}
 
 	result.LastPage = uint64(math.Ceil(float64(result.Total) / float64(queryparam.Limit)))
+
+	return result, nil
+}
+
+func (srv *socialMediaSrv) GetByID(ID uint64) (result entity.SocialMedia, err error) {
+	result, err = srv.SocialMediaRepository.GetByID(ID)
+	if err != nil {
+		log.Printf("[SocialMediaService-GetByID] error get data repo: %+v \n", err)
+		return result, err
+	}
 
 	return result, nil
 }

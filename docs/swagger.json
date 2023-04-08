@@ -146,6 +146,38 @@
                     }
                 }
             }
+        },
+        "/api/v1/social-media/{{id}}": {
+            "get": {
+                "description": "GetOne SocialMedia",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Social Media"
+                ],
+                "summary": "GetOne SocialMedia",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Social Media ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/entity.SocialMedia"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {

@@ -190,4 +190,25 @@ paths:
       summary: Create SocialMedia
       tags:
       - Social Media
+  /api/v1/social-media/{{id}}:
+    get:
+      consumes:
+      - application/json
+      description: GetOne SocialMedia
+      parameters:
+      - description: Social Media ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.SocialMedia'
+      summary: GetOne SocialMedia
+      tags:
+      - Social Media
 swagger: "2.0"

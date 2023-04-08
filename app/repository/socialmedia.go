@@ -14,6 +14,7 @@ import (
 type SocialMediaRepository interface {
 	Create(input entity.SocialMedia) (res entity.SocialMedia, err error)
 	GetAll(ctx *gin.Context, queryparam dto.ListParam) (result []entity.SocialMedia, total uint64, err error)
+	GetByID(ID uint64) (result entity.SocialMedia, err error)
 }
 
 type socialMediaRepo struct {
@@ -56,4 +57,13 @@ func (repo *socialMediaRepo) GetAll(ctx *gin.Context, queryparam dto.ListParam) 
 	}
 
 	return
+}
+
+func (repo *socialMediaRepo) GetByID(ID uint64) (result entity.SocialMedia, err error) {
+	if err = repo.DB.Where("id = ?", ID).Take(&result).Error; err != nil {
+		log.Printf("[SocialMediaRepository-GetByID][%v] error: %+v \n", ID, err)
+		return result, err
+	}
+
+	return result, err
 }

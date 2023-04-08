@@ -13,5 +13,7 @@ func SocialMediaRouter(e *gin.Engine, h controller.SocialMediaController) {
 		socialMediaRoutes.POST("/", h.Create)
 		// Get
 		socialMediaRoutes.GET("/", h.GetAll)
+		// Get
+		socialMediaRoutes.GET("/{id}", h.GetOne)
 	}
 }
