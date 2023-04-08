@@ -75,7 +75,41 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/dto.RegisterRes"
+                            "$ref": "#/definitions/entity.User"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/social-media": {
+            "post": {
+                "description": "Create new SocialMedia",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Social Media"
+                ],
+                "summary": "Create SocialMedia",
+                "parameters": [
+                    {
+                        "description": "Create SocialMedia",
+                        "name": "dto.SocialMediaCreateReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SocialMediaCreateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/entity.SocialMedia"
                         }
                     }
                 }
@@ -97,21 +131,7 @@
         "dto.LoginRes": {
             "type": "object",
             "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "token": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "error": {
-                    "type": "string"
-                },
-                "message": {
+                "token": {
                     "type": "string"
                 }
             }
@@ -133,25 +153,43 @@
                 }
             }
         },
-        "dto.RegisterRes": {
+        "dto.SocialMediaCreateReq": {
             "type": "object",
             "properties": {
-                "code": {
+                "name": {
+                    "type": "string"
+                },
+                "social_media_url": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.SocialMedia": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
                     "type": "integer"
                 },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "user": {
-                            "$ref": "#/definitions/entity.User"
-                        }
-                    }
-                },
-                "error": {
+                "name": {
                     "type": "string"
                 },
-                "message": {
+                "social_media_url": {
                     "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/entity.User"
+                },
+                "user_id": {
+                    "type": "integer"
                 }
             }
         },

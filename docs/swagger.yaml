@@ -9,16 +9,7 @@ definitions:
     type: object
   dto.LoginRes:
     properties:
-      code:
-        type: integer
-      data:
-        properties:
-          token:
-            type: string
-        type: object
-      error:
-        type: string
-      message:
+      token:
         type: string
     type: object
   dto.RegisterReq:
@@ -32,19 +23,31 @@ definitions:
       username:
         type: string
     type: object
-  dto.RegisterRes:
+  dto.SocialMediaCreateReq:
     properties:
-      code:
+      name:
+        type: string
+      social_media_url:
+        type: string
+      user_id:
         type: integer
-      data:
-        properties:
-          user:
-            $ref: '#/definitions/entity.User'
-        type: object
-      error:
+    type: object
+  entity.SocialMedia:
+    properties:
+      created_at:
         type: string
-      message:
+      id:
+        type: integer
+      name:
         type: string
+      social_media_url:
+        type: string
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/entity.User'
+      user_id:
+        type: integer
     type: object
   entity.User:
     properties:
@@ -113,8 +116,30 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/dto.RegisterRes'
+            $ref: '#/definitions/entity.User'
       summary: Register User
       tags:
       - Auth
+  /api/v1/social-media:
+    post:
+      consumes:
+      - application/json
+      description: Create new SocialMedia
+      parameters:
+      - description: Create SocialMedia
+        in: body
+        name: dto.SocialMediaCreateReq
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SocialMediaCreateReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.SocialMedia'
+      summary: Create SocialMedia
+      tags:
+      - Social Media
 swagger: "2.0"
