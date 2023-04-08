@@ -70,7 +70,7 @@ func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
 // @Param page query uint64 false "Pagination Get All Social Media"
 // @Param limit query uint64 false "Pagination Get All Social Media"
 // @Success 201 {object} dto.SocialMediaListRes
-// @Router /api/v1/social-media [GET]
+// @Router /api/v1/social-media [get]
 func (c *socialMediaHandler) GetAll(ctx *gin.Context) {
 	var (
 		paramPage  uint64 = 1
@@ -118,7 +118,7 @@ func (c *socialMediaHandler) GetAll(ctx *gin.Context) {
 // @Produce json
 // @Param id path uint64 true "Social Media ID"
 // @Success 201 {object} entity.SocialMedia
-// @Router /api/v1/social-media/{{id}} [GET]
+// @Router /api/v1/social-media/{{id}} [get]
 func (c *socialMediaHandler) GetOne(ctx *gin.Context) {
 	ID, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
 	if err != nil {
@@ -185,7 +185,7 @@ func (c *socialMediaHandler) UpdateSocialMedia(ctx *gin.Context) {
 // @Produce json
 // @Param id path uint64 true "Social Media ID"
 // @Success 200 {object} helpers.ResponseDefault
-// @Router /api/v1/social-media/{id} [put]
+// @Router /api/v1/social-media/{id} [delete]
 func (c *socialMediaHandler) DeleteSocialMedia(ctx *gin.Context) {
 	ID, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
 	if err != nil {

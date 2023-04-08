@@ -218,7 +218,7 @@ paths:
       tags:
       - Social Media
   /api/v1/social-media/{id}:
-    put:
+    delete:
       consumes:
       - application/json
       description: Delete SocialMedia by ID
@@ -236,6 +236,32 @@ paths:
           schema:
             $ref: '#/definitions/helpers.ResponseDefault'
       summary: DeleteSocialMedia
+      tags:
+      - Social Media
+    put:
+      consumes:
+      - application/json
+      description: Update  SocialMedia
+      parameters:
+      - description: Update SocialMedia
+        in: body
+        name: dto.SocialMediaUpdateReq
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SocialMediaUpdateReq'
+      - description: Social Media ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.SocialMedia'
+      summary: UpdateSocialMedia
       tags:
       - Social Media
 swagger: "2.0"

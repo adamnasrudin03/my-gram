@@ -152,6 +152,45 @@
         },
         "/api/v1/social-media/{id}": {
             "put": {
+                "description": "Update  SocialMedia",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Social Media"
+                ],
+                "summary": "UpdateSocialMedia",
+                "parameters": [
+                    {
+                        "description": "Update SocialMedia",
+                        "name": "dto.SocialMediaUpdateReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SocialMediaUpdateReq"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Social Media ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.SocialMedia"
+                        }
+                    }
+                }
+            },
+            "delete": {
                 "description": "Delete SocialMedia by ID",
                 "consumes": [
                     "application/json"
