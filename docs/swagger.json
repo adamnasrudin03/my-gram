@@ -96,13 +96,16 @@
                 "summary": "Get All SocialMedia",
                 "parameters": [
                     {
-                        "description": "Get All Social Media",
-                        "name": "dto.ListParam",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.ListParam"
-                        }
+                        "type": "integer",
+                        "description": "Pagination Get All Social Media",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Pagination Get All Social Media",
+                        "name": "limit",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -181,24 +184,6 @@
         }
     },
     "definitions": {
-        "dto.ListParam": {
-            "type": "object",
-            "required": [
-                "limit",
-                "page"
-            ],
-            "properties": {
-                "limit": {
-                    "type": "integer"
-                },
-                "offset": {
-                    "type": "integer"
-                },
-                "page": {
-                    "type": "integer"
-                }
-            }
-        },
         "dto.LoginReq": {
             "type": "object",
             "properties": {

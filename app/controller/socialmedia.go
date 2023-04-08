@@ -65,7 +65,8 @@ func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
 // @Tags Social Media
 // @Accept json
 // @Produce json
-// @Param dto.ListParam body dto.ListParam true "Get All Social Media"
+// @Param page query uint64 false "Pagination Get All Social Media"
+// @Param limit query uint64 false "Pagination Get All Social Media"
 // @Success 201 {object} dto.SocialMediaListRes
 // @Router /api/v1/social-media [GET]
 func (c *socialMediaHandler) GetAll(ctx *gin.Context) {

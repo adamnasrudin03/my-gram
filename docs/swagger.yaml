@@ -1,17 +1,5 @@
 basePath: /
 definitions:
-  dto.ListParam:
-    properties:
-      limit:
-        type: integer
-      offset:
-        type: integer
-      page:
-        type: integer
-    required:
-    - limit
-    - page
-    type: object
   dto.LoginReq:
     properties:
       password:
@@ -153,12 +141,14 @@ paths:
       - application/json
       description: Get All new SocialMedia
       parameters:
-      - description: Get All Social Media
-        in: body
-        name: dto.ListParam
-        required: true
-        schema:
-          $ref: '#/definitions/dto.ListParam'
+      - description: Pagination Get All Social Media
+        in: query
+        name: page
+        type: integer
+      - description: Pagination Get All Social Media
+        in: query
+        name: limit
+        type: integer
       produces:
       - application/json
       responses:
