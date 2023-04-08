@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/adamnasrudin03/my-gram/app/controller"
+	"adamnasrudin03/my-gram/app/controller"
 
 	"github.com/gin-gonic/gin"
 )

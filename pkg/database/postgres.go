@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/adamnasrudin03/my-gram/app/configs"
-	"github.com/adamnasrudin03/my-gram/app/entity"
+	"adamnasrudin03/my-gram/app/configs"
+	"adamnasrudin03/my-gram/app/entity"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

@@ -4,9 +4,10 @@ import (
 	"errors"
 	"log"
 
-	"github.com/adamnasrudin03/my-gram/app/dto"
-	"github.com/adamnasrudin03/my-gram/app/entity"
-	"github.com/adamnasrudin03/my-gram/pkg/helpers"
+	"adamnasrudin03/my-gram/app/dto"
+	"adamnasrudin03/my-gram/app/entity"
+	"adamnasrudin03/my-gram/pkg/helpers"
+
 	"gorm.io/gorm"
 )
 

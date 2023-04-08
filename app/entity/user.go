@@ -1,7 +1,8 @@
 package entity
 
 import (
-	"github.com/adamnasrudin03/my-gram/pkg/helpers"
+	"adamnasrudin03/my-gram/pkg/helpers"
+
 	"gorm.io/gorm"
 )
 

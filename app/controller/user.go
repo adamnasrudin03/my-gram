@@ -3,9 +3,9 @@ package controller
 import (
 	"net/http"
 
-	"github.com/adamnasrudin03/my-gram/app/dto"
-	"github.com/adamnasrudin03/my-gram/app/service"
-	"github.com/adamnasrudin03/my-gram/pkg/helpers"
+	"adamnasrudin03/my-gram/app/dto"
+	"adamnasrudin03/my-gram/app/service"
+	"adamnasrudin03/my-gram/pkg/helpers"
 
 	"github.com/gin-gonic/gin"
 )
@@ -28,37 +28,38 @@ func NewUserController(srv *service.Services) UserController {
 // Register godoc
 // @Summary Register User
 // @Description Register new User
-// @Tags json
+// @Tags Auth
 // @Accept json
 // @Produce json
 // @Param dto.RegisterReq body dto.RegisterReq true "Register User"
-// @Success 201 {object} entity.User
+// @Success 201 {object} dto.RegisterRes
 // @Router /api/v1/auth/register [post]
 func (c *userController) Register(ctx *gin.Context) {
-	var input dto.RegisterReq
+	var (
+		input dto.RegisterReq
+	)
 
 	err := ctx.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helpers.FormatValidationError(err)
 
-		response := helpers.APIResponse(err.Error(), http.StatusUnprocessableEntity, errors, nil)
-		ctx.JSON(http.StatusUnprocessableEntity, response)
+		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(errors, http.StatusBadRequest, "error"))
 		return
 	}
 
-	response, err := c.Service.User.Register(input)
+	userRes, err := c.Service.User.Register(input)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, helpers.APIResponse("there was an error register new user", http.StatusBadRequest, err.Error(), nil))
+		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(err.Error(), http.StatusBadRequest, "error"))
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, helpers.APIResponse("user registered", http.StatusCreated, "success", response))
+	ctx.JSON(http.StatusCreated, userRes)
 }
 
 // Login godoc
 // @Summary Login User
 // @Description Login User
-// @Tags json
+// @Tags Auth
 // @Accept json
 // @Produce json
 // @Param dto.LoginReq body dto.LoginReq true "Login User"
@@ -66,22 +67,21 @@ func (c *userController) Register(ctx *gin.Context) {
 // @Router /api/v1/auth/login [post]
 func (c *userController) Login(ctx *gin.Context) {
 	var (
-		input    dto.LoginReq
-		response dto.LoginRes
+		input dto.LoginReq
 	)
 
 	//Validation input user
 	err := ctx.ShouldBindJSON(&input)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(err.Error(), http.StatusBadRequest, "error", nil))
+		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(err.Error(), http.StatusBadRequest, "error"))
 		return
 	}
 
-	response.Token, err = c.Service.User.Login(input)
+	loginRes, err := c.Service.User.Login(input)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, helpers.APIResponse(err.Error(), http.StatusInternalServerError, "error", nil))
+		ctx.JSON(http.StatusInternalServerError, helpers.APIResponse(err.Error(), http.StatusInternalServerError, "error"))
 		return
 	}
 
-	ctx.JSON(http.StatusOK, helpers.APIResponse("login success", http.StatusOK, "success", response))
+	ctx.JSON(http.StatusOK, loginRes)
 }

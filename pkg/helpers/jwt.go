@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/adamnasrudin03/my-gram/app/configs"
+	"adamnasrudin03/my-gram/app/configs"
+
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 )

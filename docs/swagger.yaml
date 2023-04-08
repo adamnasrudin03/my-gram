@@ -9,7 +9,16 @@ definitions:
     type: object
   dto.LoginRes:
     properties:
-      token:
+      code:
+        type: integer
+      data:
+        properties:
+          token:
+            type: string
+        type: object
+      error:
+        type: string
+      message:
         type: string
     type: object
   dto.RegisterReq:
@@ -21,6 +30,20 @@ definitions:
       password:
         type: string
       username:
+        type: string
+    type: object
+  dto.RegisterRes:
+    properties:
+      code:
+        type: integer
+      data:
+        properties:
+          user:
+            $ref: '#/definitions/entity.User'
+        type: object
+      error:
+        type: string
+      message:
         type: string
     type: object
   entity.User:
@@ -71,7 +94,7 @@ paths:
             $ref: '#/definitions/dto.LoginRes'
       summary: Login User
       tags:
-      - json
+      - Auth
   /api/v1/auth/register:
     post:
       consumes:
@@ -90,8 +113,8 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/entity.User'
+            $ref: '#/definitions/dto.RegisterRes'
       summary: Register User
       tags:
-      - json
+      - Auth
 swagger: "2.0"

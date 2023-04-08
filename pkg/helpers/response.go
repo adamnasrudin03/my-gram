@@ -4,21 +4,19 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-type Response struct {
-	Code    int         `json:"code"`
-	Status  string      `json:"status"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data,omitempty"`
+type ResponseDefault struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Error   string `json:"error"`
 }
 
 // APIResponse is for generating template responses
-func APIResponse(message string, code int, status string, data interface{}) Response {
+func APIResponse(message string, code int, err string) ResponseDefault {
 
-	return Response{
+	return ResponseDefault{
 		Code:    code,
-		Status:  status,
 		Message: message,
-		Data:    data,
+		Error:   err,
 	}
 }
 

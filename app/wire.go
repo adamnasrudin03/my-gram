@@ -1,8 +1,8 @@
 package app
 
 import (
-	"github.com/adamnasrudin03/my-gram/app/repository"
-	"github.com/adamnasrudin03/my-gram/app/service"
+	"adamnasrudin03/my-gram/app/repository"
+	"adamnasrudin03/my-gram/app/service"
 
 	"gorm.io/gorm"
 )
