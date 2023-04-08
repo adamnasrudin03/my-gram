@@ -47,13 +47,13 @@ func (c *userController) Register(ctx *gin.Context) {
 		return
 	}
 
-	userRes, err := c.Service.User.Register(input)
+	userRes, statusHttp, err := c.Service.User.Register(input)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(err.Error(), http.StatusBadRequest, "error"))
+		ctx.JSON(statusHttp, helpers.APIResponse(err.Error(), statusHttp, "error"))
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, userRes)
+	ctx.JSON(statusHttp, userRes)
 }
 
 // Login godoc
@@ -77,11 +77,11 @@ func (c *userController) Login(ctx *gin.Context) {
 		return
 	}
 
-	loginRes, err := c.Service.User.Login(input)
+	loginRes, statusHttp, err := c.Service.User.Login(input)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, helpers.APIResponse(err.Error(), http.StatusInternalServerError, "error"))
+		ctx.JSON(statusHttp, helpers.APIResponse(err.Error(), statusHttp, "error"))
 		return
 	}
 
-	ctx.JSON(http.StatusOK, loginRes)
+	ctx.JSON(statusHttp, loginRes)
 }

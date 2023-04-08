@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"log"
+	"net/http"
 
 	"adamnasrudin03/my-gram/app/dto"
 	"adamnasrudin03/my-gram/app/entity"
@@ -11,8 +12,8 @@ import (
 )
 
 type UserService interface {
-	Register(input dto.RegisterReq) (res entity.User, err error)
-	Login(input dto.LoginReq) (res dto.LoginRes, err error)
+	Register(input dto.RegisterReq) (res entity.User, statusCode int, err error)
+	Login(input dto.LoginReq) (res dto.LoginRes, statusCode int, err error)
 }
 
 type userService struct {
@@ -25,7 +26,7 @@ func NewUserService(UserRepo repository.UserRepository) UserService {
 	}
 }
 
-func (srv *userService) Register(input dto.RegisterReq) (res entity.User, err error) {
+func (srv *userService) Register(input dto.RegisterReq) (res entity.User, statusCode int, err error) {
 	user := entity.User{
 		Username: input.Username,
 		Password: input.Password,
@@ -37,39 +38,39 @@ func (srv *userService) Register(input dto.RegisterReq) (res entity.User, err er
 	if checkUser.Email != "" {
 		err = errors.New("email user has be registered")
 		log.Printf("[UserService-Register] error check email: %+v \n", err)
-		return
+		return res, http.StatusBadRequest, err
 	}
 
 	checkUser, _ = srv.userRepository.GetByUsername(user.Username)
 	if checkUser.Username != "" {
 		err = errors.New("username user has be registered")
 		log.Printf("[UserService-Register] error check username: %+v \n", err)
-		return
+		return res, http.StatusBadRequest, err
 	}
 
 	res, err = srv.userRepository.Register(user)
 	if err != nil {
 		log.Printf("[UserService-Register] error create data: %+v \n", err)
-		return
+		return res, http.StatusInternalServerError, err
 	}
 
 	res.Password = ""
 
-	return
+	return res, http.StatusCreated, err
 }
 
-func (srv *userService) Login(input dto.LoginReq) (res dto.LoginRes, err error) {
+func (srv *userService) Login(input dto.LoginReq) (res dto.LoginRes, statusCode int, err error) {
 	user, err := srv.userRepository.Login(input)
 	if err != nil {
 		log.Printf("[UserService-Login] error: %+v \n", err)
-		return
+		return res, http.StatusInternalServerError, err
 	}
 
 	res.Token, err = helpers.GenerateToken(user.ID, user.Username, user.Email)
 	if err != nil {
 		log.Printf("[UserService-Login] error generate token: %+v \n", err)
-		return
+		return res, http.StatusInternalServerError, err
 	}
 
-	return
+	return res, http.StatusBadRequest, err
 }
