@@ -159,7 +159,7 @@ const docTemplate = `{
         },
         "/api/v1/social-media/{id}": {
             "put": {
-                "description": "Update  SocialMedia",
+                "description": "Delete SocialMedia by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -169,17 +169,8 @@ const docTemplate = `{
                 "tags": [
                     "Social Media"
                 ],
-                "summary": "UpdateSocialMedia",
+                "summary": "DeleteSocialMedia",
                 "parameters": [
-                    {
-                        "description": "Update SocialMedia",
-                        "name": "dto.SocialMediaUpdateReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.SocialMediaUpdateReq"
-                        }
-                    },
                     {
                         "type": "integer",
                         "description": "Social Media ID",
@@ -189,10 +180,10 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "201": {
-                        "description": "Created",
+                    "200": {
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entity.SocialMedia"
+                            "$ref": "#/definitions/helpers.ResponseDefault"
                         }
                     }
                 }
@@ -364,6 +355,20 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "helpers.ResponseDefault": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "message": {
                     "type": "string"
                 }
             }

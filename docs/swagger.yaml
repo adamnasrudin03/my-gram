@@ -88,6 +88,15 @@ definitions:
       username:
         type: string
     type: object
+  helpers.ResponseDefault:
+    properties:
+      code:
+        type: integer
+      error:
+        type: string
+      message:
+        type: string
+    type: object
 host: localhost:8000
 info:
   contact:
@@ -212,14 +221,8 @@ paths:
     put:
       consumes:
       - application/json
-      description: Update  SocialMedia
+      description: Delete SocialMedia by ID
       parameters:
-      - description: Update SocialMedia
-        in: body
-        name: dto.SocialMediaUpdateReq
-        required: true
-        schema:
-          $ref: '#/definitions/dto.SocialMediaUpdateReq'
       - description: Social Media ID
         in: path
         name: id
@@ -228,11 +231,11 @@ paths:
       produces:
       - application/json
       responses:
-        "201":
-          description: Created
+        "200":
+          description: OK
           schema:
-            $ref: '#/definitions/entity.SocialMedia'
-      summary: UpdateSocialMedia
+            $ref: '#/definitions/helpers.ResponseDefault'
+      summary: DeleteSocialMedia
       tags:
       - Social Media
 swagger: "2.0"

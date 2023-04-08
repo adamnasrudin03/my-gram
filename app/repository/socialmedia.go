@@ -16,6 +16,7 @@ type SocialMediaRepository interface {
 	GetAll(ctx *gin.Context, queryparam dto.ListParam) (result []entity.SocialMedia, total uint64, err error)
 	GetByID(ID uint64) (result entity.SocialMedia, err error)
 	UpdateByID(ID uint64, input dto.SocialMediaUpdateReq) (result entity.SocialMedia, err error)
+	DeleteByID(ID uint64) (err error)
 }
 
 type socialMediaRepo struct {
@@ -77,4 +78,14 @@ func (repo *socialMediaRepo) UpdateByID(ID uint64, input dto.SocialMediaUpdateRe
 	}
 
 	return result, err
+}
+
+func (repo *socialMediaRepo) DeleteByID(ID uint64) (err error) {
+	socialMedia := entity.SocialMedia{}
+	if err = repo.DB.Where("id = ?", ID).Take(&socialMedia).Error; err != nil {
+		log.Printf("[SocialMediaRepository-DeleteByID][%v] error: %+v \n", ID, err)
+		return
+	}
+
+	return
 }

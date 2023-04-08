@@ -18,6 +18,7 @@ type SocialMediaService interface {
 	GetAll(ctx *gin.Context, queryparam dto.ListParam) (result dto.SocialMediaListRes, err error)
 	GetByID(ID uint64) (result entity.SocialMedia, err error)
 	UpdateByID(ID uint64, input dto.SocialMediaUpdateReq) (result entity.SocialMedia, statusCode int, err error)
+	DeleteByID(ID uint64) (statusCode int, err error)
 }
 
 type socialMediaSrv struct {
@@ -89,4 +90,24 @@ func (srv *socialMediaSrv) UpdateByID(ID uint64, input dto.SocialMediaUpdateReq)
 	}
 
 	return result, http.StatusOK, nil
+}
+
+func (srv *socialMediaSrv) DeleteByID(ID uint64) (statusCode int, err error) {
+	sm, err := srv.SocialMediaRepository.GetByID(ID)
+	if errors.Is(err, gorm.ErrRecordNotFound) || sm.ID == 0 {
+		return http.StatusNotFound, err
+	}
+
+	if err != nil {
+		log.Printf("[SocialMediaService-DeleteByID] error get data repo: %+v \n", err)
+		return http.StatusInternalServerError, err
+	}
+
+	err = srv.SocialMediaRepository.DeleteByID(ID)
+	if err != nil {
+		log.Printf("[SocialMediaService-DeleteByID] error delete data repo: %+v \n", err)
+		return http.StatusInternalServerError, err
+	}
+
+	return http.StatusOK, nil
 }

@@ -17,5 +17,7 @@ func SocialMediaRouter(e *gin.Engine, h controller.SocialMediaController) {
 		socialMediaRoutes.GET("/{id}", h.GetOne)
 		// Update
 		socialMediaRoutes.PUT("/{id}", h.UpdateSocialMedia)
+		// Delete
+		socialMediaRoutes.DELETE("/{id}", h.DeleteSocialMedia)
 	}
 }

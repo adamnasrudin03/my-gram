@@ -17,6 +17,7 @@ type SocialMediaController interface {
 	GetAll(ctx *gin.Context)
 	GetOne(ctx *gin.Context)
 	UpdateSocialMedia(ctx *gin.Context)
+	DeleteSocialMedia(ctx *gin.Context)
 }
 
 type socialMediaHandler struct {
@@ -174,4 +175,30 @@ func (c *socialMediaHandler) UpdateSocialMedia(ctx *gin.Context) {
 	}
 
 	ctx.JSON(httpStatus, SocialMediaRes)
+}
+
+// DeleteSocialMedia godoc
+// @Summary DeleteSocialMedia
+// @Description Delete SocialMedia by ID
+// @Tags Social Media
+// @Accept json
+// @Produce json
+// @Param id path uint64 true "Social Media ID"
+// @Success 200 {object} helpers.ResponseDefault
+// @Router /api/v1/social-media/{id} [put]
+func (c *socialMediaHandler) DeleteSocialMedia(ctx *gin.Context) {
+	ID, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
+	if err != nil {
+		err = errors.New("invalid parameter id")
+		ctx.JSON(http.StatusBadRequest, helpers.APIResponse(err.Error(), http.StatusBadRequest, "error"))
+		return
+	}
+
+	httpStatus, err := c.Service.SocialMedia.DeleteByID(ID)
+	if err != nil {
+		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error"))
+		return
+	}
+
+	ctx.JSON(httpStatus, helpers.APIResponse("deleted", httpStatus, "success"))
 }
