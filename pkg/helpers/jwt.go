@@ -8,7 +8,7 @@ import (
 	"adamnasrudin03/my-gram/app/configs"
 
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v5"
+	"github.com/golang-jwt/jwt"
 )
 
 func GenerateToken(id uint64, username, email string) (token string, err error) {

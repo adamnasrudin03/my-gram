@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt"
 	"gorm.io/gorm"
 )
 
@@ -44,6 +45,7 @@ func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
 		input dto.SocialMediaCreateReq
 	)
 
+	userData := ctx.MustGet("userData").(jwt.MapClaims)
 	err := ctx.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helpers.FormatValidationError(err)
@@ -52,6 +54,7 @@ func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
 		return
 	}
 
+	input.UserID = uint64(userData["id"].(float64))
 	SocialMediaRes, err := c.Service.SocialMedia.Create(input)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, helpers.APIResponse(err.Error(), http.StatusInternalServerError, "error"))
