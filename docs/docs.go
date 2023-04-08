@@ -89,6 +89,38 @@ const docTemplate = `{
             }
         },
         "/api/v1/social-media": {
+            "get": {
+                "description": "Get All new SocialMedia",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Social Media"
+                ],
+                "summary": "Get All SocialMedia",
+                "parameters": [
+                    {
+                        "description": "Get All Social Media",
+                        "name": "dto.ListParam",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.ListParam"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/dto.SocialMediaListRes"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Create new SocialMedia",
                 "consumes": [
@@ -124,6 +156,24 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "dto.ListParam": {
+            "type": "object",
+            "required": [
+                "limit",
+                "page"
+            ],
+            "properties": {
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                }
+            }
+        },
         "dto.LoginReq": {
             "type": "object",
             "properties": {
@@ -170,6 +220,29 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.SocialMediaListRes": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.SocialMedia"
+                    }
+                },
+                "last_page": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "total_data": {
                     "type": "integer"
                 }
             }

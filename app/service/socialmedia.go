@@ -5,10 +5,14 @@ import (
 	"adamnasrudin03/my-gram/app/entity"
 	"adamnasrudin03/my-gram/app/repository"
 	"log"
+	"math"
+
+	"github.com/gin-gonic/gin"
 )
 
 type SocialMediaService interface {
 	Create(input dto.SocialMediaCreateReq) (res entity.SocialMedia, err error)
+	GetAll(ctx *gin.Context, queryparam dto.ListParam) (result dto.SocialMediaListRes, err error)
 }
 
 type socialMediaSrv struct {
@@ -35,4 +39,19 @@ func (srv *socialMediaSrv) Create(input dto.SocialMediaCreateReq) (res entity.So
 	}
 
 	return
+}
+
+func (srv *socialMediaSrv) GetAll(ctx *gin.Context, queryparam dto.ListParam) (result dto.SocialMediaListRes, err error) {
+	result.Limit = queryparam.Limit
+	result.Page = queryparam.Page
+
+	result.Data, result.Total, err = srv.SocialMediaRepository.GetAll(ctx, queryparam)
+	if err != nil {
+		log.Printf("[SocialMediaService-GetAll] error get data repo: %+v \n", err)
+		return result, err
+	}
+
+	result.LastPage = uint64(math.Ceil(float64(result.Total) / float64(queryparam.Limit)))
+
+	return result, nil
 }

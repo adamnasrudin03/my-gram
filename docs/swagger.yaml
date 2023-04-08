@@ -1,5 +1,17 @@
 basePath: /
 definitions:
+  dto.ListParam:
+    properties:
+      limit:
+        type: integer
+      offset:
+        type: integer
+      page:
+        type: integer
+    required:
+    - limit
+    - page
+    type: object
   dto.LoginReq:
     properties:
       password:
@@ -30,6 +42,21 @@ definitions:
       social_media_url:
         type: string
       user_id:
+        type: integer
+    type: object
+  dto.SocialMediaListRes:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.SocialMedia'
+        type: array
+      last_page:
+        type: integer
+      limit:
+        type: integer
+      page:
+        type: integer
+      total_data:
         type: integer
     type: object
   entity.SocialMedia:
@@ -121,6 +148,27 @@ paths:
       tags:
       - Auth
   /api/v1/social-media:
+    get:
+      consumes:
+      - application/json
+      description: Get All new SocialMedia
+      parameters:
+      - description: Get All Social Media
+        in: body
+        name: dto.ListParam
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ListParam'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.SocialMediaListRes'
+      summary: Get All SocialMedia
+      tags:
+      - Social Media
     post:
       consumes:
       - application/json
