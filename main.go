@@ -15,7 +15,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
-	_ "adamnasrudin03/my-gram/docs"
+	"adamnasrudin03/my-gram/docs"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -31,18 +31,25 @@ var (
 	socialMediaController controller.SocialMediaController = controller.NewSocialMediaController(services)
 )
 
-// @title My Gram API
-// @version 1.0
-// @description Service to manage MyGram data
-// @termsOfService https://google.com
-// @contact.name API Support
-// @contact.email admin@mail.me
-// @lisence.name Apache 2.0
-// @lisence.url https://google.com
-// @host localhost:8000
-// @BasePath /
+// @title           Swagger MyGram API
+// @version         1.0
+// @description     This is a sample server celler server.
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8000
+// @BasePath  /api/v1
+
 func main() {
 	defer database.CloseDbConnection(db)
+	config := configs.GetInstance()
+	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%v", config.Appconfig.Port)
 
 	router := gin.Default()
 	router.Use(gin.Logger())
@@ -62,7 +69,6 @@ func main() {
 		c.JSON(http.StatusNotFound, helpers.APIResponse("page not found", http.StatusNotFound, "error"))
 	})
 
-	config := configs.GetInstance()
 	listen := fmt.Sprintf(":%v", config.Appconfig.Port)
 	router.Run(listen)
 }

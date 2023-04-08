@@ -32,13 +32,13 @@ func NewSocialMediaController(srv *service.Services) SocialMediaController {
 
 // CreateSocialMedia godoc
 // @Summary CreateSocialMedia
-// @Description Create new SocialMedia
+// @Description Create new data Social Media
 // @Tags Social Media
 // @Accept json
 // @Produce json
 // @Param dto.SocialMediaCreateReq body dto.SocialMediaCreateReq true "Create SocialMedia"
 // @Success 201 {object} entity.SocialMedia
-// @Router /api/v1/social-media [post]
+// @Router /social-media [post]
 func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
 	var (
 		input dto.SocialMediaCreateReq
@@ -61,16 +61,16 @@ func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, SocialMediaRes)
 }
 
-// Get All godoc
-// @Summary Get All SocialMedia
-// @Description Get All new SocialMedia
+// GetAll godoc
+// @Summary GetAll
+// @Description Get All Social Media
 // @Tags Social Media
 // @Accept json
 // @Produce json
-// @Param page query uint64 false "Pagination Get All Social Media"
-// @Param limit query uint64 false "Pagination Get All Social Media"
-// @Success 201 {object} dto.SocialMediaListRes
-// @Router /api/v1/social-media [get]
+// @Param page query uint64 true "Pagination Get All Social Media"
+// @Param limit query uint64 true "Pagination Get All Social Media"
+// @Success 200 {object} dto.SocialMediaListRes
+// @Router /social-media [get]
 func (c *socialMediaHandler) GetAll(ctx *gin.Context) {
 	var (
 		paramPage  uint64 = 1
@@ -111,14 +111,14 @@ func (c *socialMediaHandler) GetAll(ctx *gin.Context) {
 }
 
 // GetOne godoc
-// @Summary GetOne SocialMedia
-// @Description GetOne SocialMedia
+// @Summary GetOne
+// @Description GetOne Social Media by ID
 // @Tags Social Media
 // @Accept json
 // @Produce json
 // @Param id path uint64 true "Social Media ID"
-// @Success 201 {object} entity.SocialMedia
-// @Router /api/v1/social-media/{{id}} [get]
+// @Success 200 {object} entity.SocialMedia
+// @Router /social-media/{id} [get]
 func (c *socialMediaHandler) GetOne(ctx *gin.Context) {
 	ID, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
 	if err != nil {
@@ -142,14 +142,14 @@ func (c *socialMediaHandler) GetOne(ctx *gin.Context) {
 
 // UpdateSocialMedia godoc
 // @Summary UpdateSocialMedia
-// @Description Update  SocialMedia
+// @Description Update Social Media by ID
 // @Tags Social Media
 // @Accept json
 // @Produce json
 // @Param dto.SocialMediaUpdateReq body dto.SocialMediaUpdateReq true "Update SocialMedia"
 // @Param id path uint64 true "Social Media ID"
 // @Success 200 {object} entity.SocialMedia
-// @Router /api/v1/social-media/{id} [put]
+// @Router /social-media/{id} [put]
 func (c *socialMediaHandler) UpdateSocialMedia(ctx *gin.Context) {
 	var (
 		input dto.SocialMediaUpdateReq
@@ -179,13 +179,13 @@ func (c *socialMediaHandler) UpdateSocialMedia(ctx *gin.Context) {
 
 // DeleteSocialMedia godoc
 // @Summary DeleteSocialMedia
-// @Description Delete SocialMedia by ID
+// @Description Delete Social Media by ID
 // @Tags Social Media
 // @Accept json
 // @Produce json
 // @Param id path uint64 true "Social Media ID"
 // @Success 200 {object} helpers.ResponseDefault
-// @Router /api/v1/social-media/{id} [delete]
+// @Router /social-media/{id} [delete]
 func (c *socialMediaHandler) DeleteSocialMedia(ctx *gin.Context) {
 	ID, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
 	if err != nil {

@@ -33,7 +33,7 @@ func NewUserController(srv *service.Services) UserController {
 // @Produce json
 // @Param dto.RegisterReq body dto.RegisterReq true "Register User"
 // @Success 201 {object} entity.User
-// @Router /api/v1/auth/register [post]
+// @Router /auth/register [post]
 func (c *userController) Register(ctx *gin.Context) {
 	var (
 		input dto.RegisterReq
@@ -64,7 +64,7 @@ func (c *userController) Register(ctx *gin.Context) {
 // @Produce json
 // @Param dto.LoginReq body dto.LoginReq true "Login User"
 // @Success 200 {object} dto.LoginRes
-// @Router /api/v1/auth/login [post]
+// @Router /auth/login [post]
 func (c *userController) Login(ctx *gin.Context) {
 	var (
 		input dto.LoginReq

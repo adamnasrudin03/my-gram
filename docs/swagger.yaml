@@ -1,4 +1,4 @@
-basePath: /
+basePath: /api/v1
 definitions:
   dto.LoginReq:
     properties:
@@ -100,14 +100,18 @@ definitions:
 host: localhost:8000
 info:
   contact:
-    email: admin@mail.me
+    email: support@swagger.io
     name: API Support
-  description: Service to manage MyGram data
-  termsOfService: https://google.com
-  title: My Gram API
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger MyGram API
   version: "1.0"
 paths:
-  /api/v1/auth/login:
+  /auth/login:
     post:
       consumes:
       - application/json
@@ -129,7 +133,7 @@ paths:
       summary: Login User
       tags:
       - Auth
-  /api/v1/auth/register:
+  /auth/register:
     post:
       consumes:
       - application/json
@@ -151,34 +155,36 @@ paths:
       summary: Register User
       tags:
       - Auth
-  /api/v1/social-media:
+  /social-media:
     get:
       consumes:
       - application/json
-      description: Get All new SocialMedia
+      description: Get All Social Media
       parameters:
       - description: Pagination Get All Social Media
         in: query
         name: page
+        required: true
         type: integer
       - description: Pagination Get All Social Media
         in: query
         name: limit
+        required: true
         type: integer
       produces:
       - application/json
       responses:
-        "201":
-          description: Created
+        "200":
+          description: OK
           schema:
             $ref: '#/definitions/dto.SocialMediaListRes'
-      summary: Get All SocialMedia
+      summary: GetAll
       tags:
       - Social Media
     post:
       consumes:
       - application/json
-      description: Create new SocialMedia
+      description: Create new data Social Media
       parameters:
       - description: Create SocialMedia
         in: body
@@ -196,32 +202,11 @@ paths:
       summary: CreateSocialMedia
       tags:
       - Social Media
-  /api/v1/social-media/{{id}}:
-    get:
-      consumes:
-      - application/json
-      description: GetOne SocialMedia
-      parameters:
-      - description: Social Media ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/entity.SocialMedia'
-      summary: GetOne SocialMedia
-      tags:
-      - Social Media
-  /api/v1/social-media/{id}:
+  /social-media/{id}:
     delete:
       consumes:
       - application/json
-      description: Delete SocialMedia by ID
+      description: Delete Social Media by ID
       parameters:
       - description: Social Media ID
         in: path
@@ -238,10 +223,30 @@ paths:
       summary: DeleteSocialMedia
       tags:
       - Social Media
+    get:
+      consumes:
+      - application/json
+      description: GetOne Social Media by ID
+      parameters:
+      - description: Social Media ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.SocialMedia'
+      summary: GetOne
+      tags:
+      - Social Media
     put:
       consumes:
       - application/json
-      description: Update  SocialMedia
+      description: Update Social Media by ID
       parameters:
       - description: Update SocialMedia
         in: body

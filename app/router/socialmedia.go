@@ -9,15 +9,10 @@ import (
 func SocialMediaRouter(e *gin.Engine, h controller.SocialMediaController) {
 	socialMediaRoutes := e.Group("/api/v1/social-media")
 	{
-		// Create
 		socialMediaRoutes.POST("/", h.CreateSocialMedia)
-		// Get
 		socialMediaRoutes.GET("/", h.GetAll)
-		// Get
-		socialMediaRoutes.GET("/{id}", h.GetOne)
-		// Update
-		socialMediaRoutes.PUT("/{id}", h.UpdateSocialMedia)
-		// Delete
-		socialMediaRoutes.DELETE("/{id}", h.DeleteSocialMedia)
+		socialMediaRoutes.PUT("/:id", h.UpdateSocialMedia)
+		socialMediaRoutes.GET("/:id", h.GetOne)
+		socialMediaRoutes.DELETE("/:id", h.DeleteSocialMedia)
 	}
 }

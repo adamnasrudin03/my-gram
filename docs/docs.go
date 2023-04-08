@@ -10,17 +10,22 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "https://google.com",
+        "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
-            "email": "admin@mail.me"
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/auth/login": {
+        "/auth/login": {
             "post": {
                 "description": "Login User",
                 "consumes": [
@@ -54,7 +59,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/auth/register": {
+        "/auth/register": {
             "post": {
                 "description": "Register new User",
                 "consumes": [
@@ -88,9 +93,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/social-media": {
+        "/social-media": {
             "get": {
-                "description": "Get All new SocialMedia",
+                "description": "Get All Social Media",
                 "consumes": [
                     "application/json"
                 ],
@@ -100,24 +105,26 @@ const docTemplate = `{
                 "tags": [
                     "Social Media"
                 ],
-                "summary": "Get All SocialMedia",
+                "summary": "GetAll",
                 "parameters": [
                     {
                         "type": "integer",
                         "description": "Pagination Get All Social Media",
                         "name": "page",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     },
                     {
                         "type": "integer",
                         "description": "Pagination Get All Social Media",
                         "name": "limit",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
-                    "201": {
-                        "description": "Created",
+                    "200": {
+                        "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/dto.SocialMediaListRes"
                         }
@@ -125,7 +132,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Create new SocialMedia",
+                "description": "Create new data Social Media",
                 "consumes": [
                     "application/json"
                 ],
@@ -157,9 +164,39 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/social-media/{id}": {
+        "/social-media/{id}": {
+            "get": {
+                "description": "GetOne Social Media by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Social Media"
+                ],
+                "summary": "GetOne",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Social Media ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.SocialMedia"
+                        }
+                    }
+                }
+            },
             "put": {
-                "description": "Update  SocialMedia",
+                "description": "Update Social Media by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -198,7 +235,7 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Delete SocialMedia by ID",
+                "description": "Delete Social Media by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -223,38 +260,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/helpers.ResponseDefault"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/social-media/{{id}}": {
-            "get": {
-                "description": "GetOne SocialMedia",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Social Media"
-                ],
-                "summary": "GetOne SocialMedia",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Social Media ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/entity.SocialMedia"
                         }
                     }
                 }
@@ -419,10 +424,10 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:8000",
-	BasePath:         "/",
+	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "My Gram API",
-	Description:      "Service to manage MyGram data",
+	Title:            "Swagger MyGram API",
+	Description:      "This is a sample server celler server.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }
