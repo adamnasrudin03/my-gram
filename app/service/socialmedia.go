@@ -73,8 +73,8 @@ func (srv *socialMediaSrv) GetByID(ID uint64) (result entity.SocialMedia, err er
 }
 
 func (srv *socialMediaSrv) UpdateByID(ID uint64, input dto.SocialMediaUpdateReq) (result entity.SocialMedia, statusCode int, err error) {
-	_, err = srv.SocialMediaRepository.GetByID(ID)
-	if errors.Is(err, gorm.ErrRecordNotFound) {
+	sm, err := srv.SocialMediaRepository.GetByID(ID)
+	if errors.Is(err, gorm.ErrRecordNotFound) || sm.ID == 0 {
 		return result, http.StatusNotFound, err
 	}
 
