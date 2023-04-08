@@ -178,6 +178,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/dto.SocialMediaListRes'
+      security:
+      - BearerAuth: []
       summary: GetAll
       tags:
       - Social Media
@@ -199,6 +201,8 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/entity.SocialMedia'
+      security:
+      - BearerAuth: []
       summary: CreateSocialMedia
       tags:
       - Social Media
@@ -220,6 +224,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/helpers.ResponseDefault'
+      security:
+      - BearerAuth: []
       summary: DeleteSocialMedia
       tags:
       - Social Media
@@ -240,6 +246,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/entity.SocialMedia'
+      security:
+      - BearerAuth: []
       summary: GetOne
       tags:
       - Social Media
@@ -266,7 +274,15 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/entity.SocialMedia'
+      security:
+      - BearerAuth: []
       summary: UpdateSocialMedia
       tags:
       - Social Media
+securityDefinitions:
+  BearerAuth:
+    description: Add "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

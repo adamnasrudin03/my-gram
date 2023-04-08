@@ -95,6 +95,11 @@ const docTemplate = `{
         },
         "/social-media": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get All Social Media",
                 "consumes": [
                     "application/json"
@@ -132,6 +137,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create new data Social Media",
                 "consumes": [
                     "application/json"
@@ -166,6 +176,11 @@ const docTemplate = `{
         },
         "/social-media/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "GetOne Social Media by ID",
                 "consumes": [
                     "application/json"
@@ -196,6 +211,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update Social Media by ID",
                 "consumes": [
                     "application/json"
@@ -235,6 +255,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete Social Media by ID",
                 "consumes": [
                     "application/json"
@@ -416,6 +441,14 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "description": "Add \"Bearer\" followed by a space and JWT token.",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`

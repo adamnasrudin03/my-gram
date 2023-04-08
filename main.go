@@ -45,7 +45,10 @@ var (
 
 // @host      localhost:8000
 // @BasePath  /api/v1
-
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @description Add "Bearer" followed by a space and JWT token.
 func main() {
 	defer database.CloseDbConnection(db)
 	config := configs.GetInstance()

@@ -40,6 +40,7 @@ func NewSocialMediaController(srv *service.Services) SocialMediaController {
 // @Param dto.SocialMediaCreateReq body dto.SocialMediaCreateReq true "Create SocialMedia"
 // @Success 201 {object} entity.SocialMedia
 // @Router /social-media [post]
+// @Security BearerAuth
 func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
 	var (
 		input dto.SocialMediaCreateReq
@@ -74,6 +75,7 @@ func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
 // @Param limit query uint64 true "Pagination Get All Social Media"
 // @Success 200 {object} dto.SocialMediaListRes
 // @Router /social-media [get]
+// @Security BearerAuth
 func (c *socialMediaHandler) GetAll(ctx *gin.Context) {
 	var (
 		paramPage  uint64 = 1
@@ -122,6 +124,7 @@ func (c *socialMediaHandler) GetAll(ctx *gin.Context) {
 // @Param id path uint64 true "Social Media ID"
 // @Success 200 {object} entity.SocialMedia
 // @Router /social-media/{id} [get]
+// @Security BearerAuth
 func (c *socialMediaHandler) GetOne(ctx *gin.Context) {
 	ID, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
 	if err != nil {
@@ -153,6 +156,7 @@ func (c *socialMediaHandler) GetOne(ctx *gin.Context) {
 // @Param id path uint64 true "Social Media ID"
 // @Success 200 {object} entity.SocialMedia
 // @Router /social-media/{id} [put]
+// @Security BearerAuth
 func (c *socialMediaHandler) UpdateSocialMedia(ctx *gin.Context) {
 	var (
 		input dto.SocialMediaUpdateReq
@@ -189,6 +193,7 @@ func (c *socialMediaHandler) UpdateSocialMedia(ctx *gin.Context) {
 // @Param id path uint64 true "Social Media ID"
 // @Success 200 {object} helpers.ResponseDefault
 // @Router /social-media/{id} [delete]
+// @Security BearerAuth
 func (c *socialMediaHandler) DeleteSocialMedia(ctx *gin.Context) {
 	ID, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
 	if err != nil {
