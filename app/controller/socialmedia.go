@@ -10,7 +10,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
-	"gorm.io/gorm"
 )
 
 type SocialMediaController interface {
@@ -56,13 +55,13 @@ func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
 	}
 
 	input.UserID = uint64(userData["id"].(float64))
-	SocialMediaRes, err := c.Service.SocialMedia.Create(input)
+	SocialMediaRes, httpStatus, err := c.Service.SocialMedia.Create(input)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, helpers.APIResponse(err.Error(), http.StatusInternalServerError, "error"))
+		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error"))
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, SocialMediaRes)
+	ctx.JSON(httpStatus, SocialMediaRes)
 }
 
 // GetAll godoc
@@ -106,13 +105,13 @@ func (c *socialMediaHandler) GetAll(ctx *gin.Context) {
 		Limit: paramLimit,
 	}
 
-	res, err := c.Service.SocialMedia.GetAll(ctx, param)
+	res, httpStatus, err := c.Service.SocialMedia.GetAll(ctx, param)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, helpers.APIResponse(err.Error(), http.StatusInternalServerError, "error"))
+		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error"))
 		return
 	}
 
-	ctx.JSON(http.StatusOK, res)
+	ctx.JSON(httpStatus, res)
 }
 
 // GetOne godoc
@@ -133,17 +132,12 @@ func (c *socialMediaHandler) GetOne(ctx *gin.Context) {
 		return
 	}
 
-	res, err := c.Service.SocialMedia.GetByID(ID)
-	if errors.Is(err, gorm.ErrRecordNotFound) {
-		ctx.JSON(http.StatusNotFound, helpers.APIResponse(err.Error(), http.StatusNotFound, "error"))
-		return
-	}
-
+	res, httpStatus, err := c.Service.SocialMedia.GetByID(ID)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, helpers.APIResponse(err.Error(), http.StatusInternalServerError, "error"))
+		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error"))
 		return
 	}
-	ctx.JSON(http.StatusOK, res)
+	ctx.JSON(httpStatus, res)
 }
 
 // UpdateSocialMedia godoc

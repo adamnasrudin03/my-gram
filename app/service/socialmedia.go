@@ -14,9 +14,9 @@ import (
 )
 
 type SocialMediaService interface {
-	Create(input dto.SocialMediaCreateReq) (res entity.SocialMedia, err error)
-	GetAll(ctx *gin.Context, queryparam dto.ListParam) (result dto.SocialMediaListRes, err error)
-	GetByID(ID uint64) (result entity.SocialMedia, err error)
+	Create(input dto.SocialMediaCreateReq) (res entity.SocialMedia, statusCode int, err error)
+	GetAll(ctx *gin.Context, queryparam dto.ListParam) (result dto.SocialMediaListRes, statusCode int, err error)
+	GetByID(ID uint64) (result entity.SocialMedia, statusCode int, err error)
 	UpdateByID(ID uint64, input dto.SocialMediaUpdateReq) (result entity.SocialMedia, statusCode int, err error)
 	DeleteByID(ID uint64) (statusCode int, err error)
 }
@@ -31,7 +31,7 @@ func NewSocialMediaService(SocialMediaRepo repository.SocialMediaRepository) Soc
 	}
 }
 
-func (srv *socialMediaSrv) Create(input dto.SocialMediaCreateReq) (res entity.SocialMedia, err error) {
+func (srv *socialMediaSrv) Create(input dto.SocialMediaCreateReq) (res entity.SocialMedia, statusCode int, err error) {
 	socialMedia := entity.SocialMedia{
 		UserID:         input.UserID,
 		Name:           input.Name,
@@ -41,35 +41,39 @@ func (srv *socialMediaSrv) Create(input dto.SocialMediaCreateReq) (res entity.So
 	res, err = srv.SocialMediaRepository.Create(socialMedia)
 	if err != nil {
 		log.Printf("[SocialMediaService-Create] error create data: %+v \n", err)
-		return
+		return res, http.StatusInternalServerError, err
 	}
 
-	return
+	return res, http.StatusCreated, nil
 }
 
-func (srv *socialMediaSrv) GetAll(ctx *gin.Context, queryparam dto.ListParam) (result dto.SocialMediaListRes, err error) {
+func (srv *socialMediaSrv) GetAll(ctx *gin.Context, queryparam dto.ListParam) (result dto.SocialMediaListRes, statusCode int, err error) {
 	result.Limit = queryparam.Limit
 	result.Page = queryparam.Page
 
 	result.Data, result.Total, err = srv.SocialMediaRepository.GetAll(ctx, queryparam)
 	if err != nil {
 		log.Printf("[SocialMediaService-GetAll] error get data repo: %+v \n", err)
-		return result, err
+		return result, http.StatusInternalServerError, err
 	}
 
 	result.LastPage = uint64(math.Ceil(float64(result.Total) / float64(queryparam.Limit)))
 
-	return result, nil
+	return result, http.StatusOK, nil
 }
 
-func (srv *socialMediaSrv) GetByID(ID uint64) (result entity.SocialMedia, err error) {
+func (srv *socialMediaSrv) GetByID(ID uint64) (result entity.SocialMedia, statusCode int, err error) {
 	result, err = srv.SocialMediaRepository.GetByID(ID)
-	if err != nil {
-		log.Printf("[SocialMediaService-GetByID] error get data repo: %+v \n", err)
-		return result, err
+	if errors.Is(err, gorm.ErrRecordNotFound) || result.ID == 0 {
+		return result, http.StatusNotFound, err
 	}
 
-	return result, nil
+	if err != nil {
+		log.Printf("[SocialMediaService-GetByID] error get data repo: %+v \n", err)
+		return result, http.StatusInternalServerError, err
+	}
+
+	return result, http.StatusOK, nil
 }
 
 func (srv *socialMediaSrv) UpdateByID(ID uint64, input dto.SocialMediaUpdateReq) (result entity.SocialMedia, statusCode int, err error) {
@@ -83,7 +87,7 @@ func (srv *socialMediaSrv) UpdateByID(ID uint64, input dto.SocialMediaUpdateReq)
 		return result, http.StatusInternalServerError, err
 	}
 
-	_, err = srv.SocialMediaRepository.UpdateByID(ID, input)
+	result, err = srv.SocialMediaRepository.UpdateByID(ID, input)
 	if err != nil {
 		log.Printf("[SocialMediaService-UpdateByID] error update data repo: %+v \n", err)
 		return result, http.StatusInternalServerError, err
