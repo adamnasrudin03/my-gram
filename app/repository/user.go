@@ -14,6 +14,8 @@ import (
 type UserRepository interface {
 	Register(input entity.User) (res entity.User, err error)
 	Login(input dto.LoginReq) (res entity.User, er error)
+	GetByEmail(email string) (res entity.User, err error)
+	GetByUsername(username string) (res entity.User, err error)
 }
 
 type userRepo struct {
@@ -44,6 +46,22 @@ func (repo *userRepo) Login(input dto.LoginReq) (res entity.User, err error) {
 	if !helpers.PasswordValid(res.Password, input.Password) {
 		err = errors.New("invalid password")
 		log.Printf("[UserRepository-Login] error ogin: %+v \n", err)
+		return
+	}
+	return
+}
+
+func (repo *userRepo) GetByEmail(email string) (res entity.User, err error) {
+	if err = repo.DB.Where("email = ?", email).Take(&res).Error; err != nil {
+		log.Printf("[UserRepository-GetByEmail] error : %+v \n", err)
+		return
+	}
+	return
+}
+
+func (repo *userRepo) GetByUsername(username string) (res entity.User, err error) {
+	if err = repo.DB.Where("username = ?", username).Take(&res).Error; err != nil {
+		log.Printf("[UserRepository-GetByUsername] error : %+v \n", err)
 		return
 	}
 	return

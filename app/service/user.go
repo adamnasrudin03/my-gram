@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"log"
 
 	"adamnasrudin03/my-gram/app/dto"
@@ -30,6 +31,20 @@ func (srv *userService) Register(input dto.RegisterReq) (res entity.User, err er
 		Password: input.Password,
 		Email:    input.Email,
 		Age:      input.Age,
+	}
+
+	checkUser, _ := srv.userRepository.GetByEmail(user.Email)
+	if checkUser.Email != "" {
+		err = errors.New("email user has be registered")
+		log.Printf("[UserService-Register] error check email: %+v \n", err)
+		return
+	}
+
+	checkUser, _ = srv.userRepository.GetByUsername(user.Username)
+	if checkUser.Username != "" {
+		err = errors.New("username user has be registered")
+		log.Printf("[UserService-Register] error check username: %+v \n", err)
+		return
 	}
 
 	res, err = srv.userRepository.Register(user)
