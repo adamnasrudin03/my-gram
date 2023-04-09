@@ -203,15 +203,15 @@ definitions:
 host: localhost:8000
 info:
   contact:
-    email: support@swagger.io
-    name: API Support
-    url: http://www.swagger.io/support
-  description: This is a sample server celler server.
+    email: adamnasrudin858@gmail.com
+    name: Adam Nasrudin
+    url: https://github.com/adamnasrudin03
+  description: This is REST API documentation it's the final project of the training
+    program (Scalable Web Services with Golang) organized by Kominfo x Hacktiv8
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: Swagger MyGram API
+  title: MyGram Documentation
   version: "1.0"
 paths:
   /auth/login:

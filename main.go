@@ -33,14 +33,13 @@ var (
 	photoController       controller.PhotoController       = controller.NewPhotoController(services)
 )
 
-// @title           Swagger MyGram API
+// @title           MyGram Documentation
 // @version         1.0
-// @description     This is a sample server celler server.
-// @termsOfService  http://swagger.io/terms/
+// @description     This is REST API documentation it's the final project of the training program (Scalable Web Services with Golang) organized by Kominfo x Hacktiv8
 
-// @contact.name   API Support
-// @contact.url    http://www.swagger.io/support
-// @contact.email  support@swagger.io
+// @contact.name   Adam Nasrudin
+// @contact.url    https://github.com/adamnasrudin03
+// @contact.email  adamnasrudin858@gmail.com
 
 // @license.name  Apache 2.0
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html

@@ -1,13 +1,12 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample server celler server.",
-        "title": "Swagger MyGram API",
-        "termsOfService": "http://swagger.io/terms/",
+        "description": "This is REST API documentation it's the final project of the training program (Scalable Web Services with Golang) organized by Kominfo x Hacktiv8",
+        "title": "MyGram Documentation",
         "contact": {
-            "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "name": "Adam Nasrudin",
+            "url": "https://github.com/adamnasrudin03",
+            "email": "adamnasrudin858@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",

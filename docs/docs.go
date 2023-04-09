@@ -10,11 +10,10 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "name": "Adam Nasrudin",
+            "url": "https://github.com/adamnasrudin03",
+            "email": "adamnasrudin858@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
@@ -1006,8 +1005,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8000",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "Swagger MyGram API",
-	Description:      "This is a sample server celler server.",
+	Title:            "MyGram Documentation",
+	Description:      "This is REST API documentation it's the final project of the training program (Scalable Web Services with Golang) organized by Kominfo x Hacktiv8",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }
