@@ -1,6 +1,7 @@
 package configs
 
 import (
+	"log"
 	"os"
 	"sync"
 
@@ -37,7 +38,7 @@ func GetInstance() *Configs {
 		lock.Lock()
 
 		if err := godotenv.Load(); err != nil {
-			panic("Failed to load env file")
+			log.Println("Failed to load env file")
 		}
 
 		configs = &Configs{
