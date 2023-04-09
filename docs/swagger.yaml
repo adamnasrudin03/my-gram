@@ -1,5 +1,29 @@
 basePath: /api/v1
 definitions:
+  dto.CommentCreateUpdateReq:
+    properties:
+      message:
+        type: string
+      photo_id:
+        type: integer
+    required:
+    - message
+    type: object
+  dto.CommentListRes:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.Comment'
+        type: array
+      last_page:
+        type: integer
+      limit:
+        type: integer
+      page:
+        type: integer
+      total_data:
+        type: integer
+    type: object
   dto.LoginReq:
     properties:
       password:
@@ -67,6 +91,44 @@ definitions:
     required:
     - name
     - social_media_url
+    type: object
+  entity.Comment:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      message:
+        type: string
+      photo:
+        $ref: '#/definitions/entity.Photo'
+      photo_id:
+        type: integer
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/entity.User'
+      user_id:
+        type: integer
+    type: object
+  entity.Photo:
+    properties:
+      caption:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      photo_url:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/entity.User'
+      user_id:
+        type: integer
     type: object
   entity.SocialMedia:
     properties:
@@ -169,6 +231,130 @@ paths:
       summary: Register User
       tags:
       - Auth
+  /comments:
+    get:
+      consumes:
+      - application/json
+      description: Get All Comment
+      parameters:
+      - description: Pagination Get All Comment
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Pagination Get All Comment
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CommentListRes'
+      security:
+      - BearerAuth: []
+      summary: GetAll
+      tags:
+      - Comment
+    post:
+      consumes:
+      - application/json
+      description: Create new data Comment
+      parameters:
+      - description: Create Comment
+        in: body
+        name: dto.CommentCreateUpdateReq
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CommentCreateUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.Comment'
+      security:
+      - BearerAuth: []
+      summary: CreateComment
+      tags:
+      - Comment
+  /comments/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Comment by ID
+      parameters:
+      - description: Comment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.ResponseDefault'
+      security:
+      - BearerAuth: []
+      summary: DeleteComment
+      tags:
+      - Comment
+    get:
+      consumes:
+      - application/json
+      description: GetOne Comment by ID
+      parameters:
+      - description: Comment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Comment'
+      security:
+      - BearerAuth: []
+      summary: GetOne
+      tags:
+      - Comment
+    put:
+      consumes:
+      - application/json
+      description: Update Comment by ID
+      parameters:
+      - description: Update Comment
+        in: body
+        name: dto.CommentCreateUpdateReq
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CommentCreateUpdateReq'
+      - description: Comment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Comment'
+      security:
+      - BearerAuth: []
+      summary: UpdateComment
+      tags:
+      - Comment
   /social-media:
     get:
       consumes:

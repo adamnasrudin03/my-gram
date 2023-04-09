@@ -4,4 +4,5 @@ package repository
 type Repositories struct {
 	User        UserRepository
 	SocialMedia SocialMediaRepository
+	Comment     CommentRepository
 }

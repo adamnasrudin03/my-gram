@@ -4,4 +4,5 @@ package service
 type Services struct {
 	User        UserService
 	SocialMedia SocialMediaService
+	Comment     CommentService
 }

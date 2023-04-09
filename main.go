@@ -29,6 +29,7 @@ var (
 
 	userController        controller.UserController        = controller.NewUserController(services)
 	socialMediaController controller.SocialMediaController = controller.NewSocialMediaController(services)
+	commentController     controller.CommentController     = controller.NewCommentController(services)
 )
 
 // @title           Swagger MyGram API
@@ -66,6 +67,7 @@ func main() {
 	// Route here
 	routers.UserRouter(router, userController)
 	routers.SocialMediaRouter(router, socialMediaController)
+	routers.CommentRouter(router, commentController)
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.NoRoute(func(c *gin.Context) {
