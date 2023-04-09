@@ -39,6 +39,33 @@ definitions:
       token:
         type: string
     type: object
+  dto.PhotoCreateUpdateReq:
+    properties:
+      caption:
+        type: string
+      photo_url:
+        type: string
+      title:
+        type: string
+    required:
+    - photo_url
+    - title
+    type: object
+  dto.PhotoListRes:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.Photo'
+        type: array
+      last_page:
+        type: integer
+      limit:
+        type: integer
+      page:
+        type: integer
+      total_data:
+        type: integer
+    type: object
   dto.RegisterReq:
     properties:
       age:
@@ -355,6 +382,130 @@ paths:
       summary: UpdateComment
       tags:
       - Comment
+  /photos:
+    get:
+      consumes:
+      - application/json
+      description: Get All Photo
+      parameters:
+      - description: Pagination Get All Photo
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Pagination Get All Photo
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.PhotoListRes'
+      security:
+      - BearerAuth: []
+      summary: GetAll
+      tags:
+      - Photo
+    post:
+      consumes:
+      - application/json
+      description: Create new data Photo
+      parameters:
+      - description: Create Photo
+        in: body
+        name: dto.PhotoCreateUpdateReq
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PhotoCreateUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.Photo'
+      security:
+      - BearerAuth: []
+      summary: CreatePhoto
+      tags:
+      - Photo
+  /photos/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Photo by ID
+      parameters:
+      - description: Photo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.ResponseDefault'
+      security:
+      - BearerAuth: []
+      summary: DeletePhoto
+      tags:
+      - Photo
+    get:
+      consumes:
+      - application/json
+      description: GetOne Photo by ID
+      parameters:
+      - description: Photo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Photo'
+      security:
+      - BearerAuth: []
+      summary: GetOne
+      tags:
+      - Photo
+    put:
+      consumes:
+      - application/json
+      description: Update Photo by ID
+      parameters:
+      - description: Update Photo
+        in: body
+        name: dto.PhotoCreateUpdateReq
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PhotoCreateUpdateReq'
+      - description: Photo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Photo'
+      security:
+      - BearerAuth: []
+      summary: UpdatePhoto
+      tags:
+      - Photo
   /social-media:
     get:
       consumes:

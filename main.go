@@ -30,6 +30,7 @@ var (
 	userController        controller.UserController        = controller.NewUserController(services)
 	socialMediaController controller.SocialMediaController = controller.NewSocialMediaController(services)
 	commentController     controller.CommentController     = controller.NewCommentController(services)
+	photoController       controller.PhotoController       = controller.NewPhotoController(services)
 )
 
 // @title           Swagger MyGram API
@@ -61,13 +62,14 @@ func main() {
 	router.Use(cors.Default())
 
 	router.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, helpers.APIResponse("welcome its server", http.StatusOK, "success"))
+		c.JSON(http.StatusOK, helpers.APIResponse("welcome its server", http.StatusOK, "false"))
 	})
 
 	// Route here
 	routers.UserRouter(router, userController)
 	routers.SocialMediaRouter(router, socialMediaController)
 	routers.CommentRouter(router, commentController)
+	routers.PhotoRouter(router, photoController)
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.NoRoute(func(c *gin.Context) {
