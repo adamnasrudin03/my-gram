@@ -11,10 +11,10 @@ func SocialMediaRouter(e *gin.Engine, h controller.SocialMediaController) {
 	socialMediaRoutes := e.Group("/api/v1/social-media")
 	{
 		socialMediaRoutes.Use(middlewares.Authentication())
-		socialMediaRoutes.POST("/", h.CreateSocialMedia)
-		socialMediaRoutes.GET("/", middlewares.ListAuthorization(), h.GetAll)
-		socialMediaRoutes.PUT("/:id", h.UpdateSocialMedia)
-		socialMediaRoutes.GET("/:id", h.GetOne)
-		socialMediaRoutes.DELETE("/:id", h.DeleteSocialMedia)
+		socialMediaRoutes.POST("/", middlewares.CheckAuthorization(), h.CreateSocialMedia)
+		socialMediaRoutes.GET("/", middlewares.CheckAuthorization(), h.GetAll)
+		socialMediaRoutes.PUT("/:id", middlewares.SocialMediaAuthorization(), h.UpdateSocialMedia)
+		socialMediaRoutes.GET("/:id", middlewares.CheckAuthorization(), h.GetOne)
+		socialMediaRoutes.DELETE("/:id", middlewares.SocialMediaAuthorization(), h.DeleteSocialMedia)
 	}
 }

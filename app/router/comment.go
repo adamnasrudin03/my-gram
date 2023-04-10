@@ -11,10 +11,10 @@ func CommentRouter(e *gin.Engine, h controller.CommentController) {
 	commentRoutes := e.Group("/api/v1/comments")
 	{
 		commentRoutes.Use(middlewares.Authentication())
-		commentRoutes.POST("/", h.CreateComment)
-		commentRoutes.GET("/", middlewares.ListAuthorization(), h.GetAll)
-		commentRoutes.PUT("/:id", h.UpdateComment)
-		commentRoutes.GET("/:id", h.GetOne)
-		commentRoutes.DELETE("/:id", h.DeleteComment)
+		commentRoutes.POST("/", middlewares.CheckAuthorization(), h.CreateComment)
+		commentRoutes.GET("/", middlewares.CheckAuthorization(), h.GetAll)
+		commentRoutes.PUT("/:id", middlewares.CommentAuthorization(), h.UpdateComment)
+		commentRoutes.GET("/:id", middlewares.CheckAuthorization(), h.GetOne)
+		commentRoutes.DELETE("/:id", middlewares.CommentAuthorization(), h.DeleteComment)
 	}
 }

@@ -26,7 +26,7 @@ func Authentication() gin.HandlerFunc {
 	}
 }
 
-func ListAuthorization() gin.HandlerFunc {
+func CheckAuthorization() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
 		userData := ctx.MustGet("userData").(jwt.MapClaims)

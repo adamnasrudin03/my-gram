@@ -11,10 +11,10 @@ func PhotoRouter(e *gin.Engine, h controller.PhotoController) {
 	photoRoutes := e.Group("/api/v1/photos")
 	{
 		photoRoutes.Use(middlewares.Authentication())
-		photoRoutes.POST("/", h.CreatePhoto)
-		photoRoutes.GET("/", middlewares.ListAuthorization(), h.GetAll)
-		photoRoutes.PUT("/:id", h.UpdatePhoto)
-		photoRoutes.GET("/:id", h.GetOne)
-		photoRoutes.DELETE("/:id", h.DeletePhoto)
+		photoRoutes.POST("/", middlewares.CheckAuthorization(), h.CreatePhoto)
+		photoRoutes.GET("/", middlewares.CheckAuthorization(), h.GetAll)
+		photoRoutes.PUT("/:id", middlewares.PhotoAuthorization(), h.UpdatePhoto)
+		photoRoutes.GET("/:id", middlewares.CheckAuthorization(), h.GetOne)
+		photoRoutes.DELETE("/:id", middlewares.PhotoAuthorization(), h.DeletePhoto)
 	}
 }
