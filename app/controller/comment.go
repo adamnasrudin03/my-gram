@@ -63,13 +63,13 @@ func (c *commentHandler) CreateComment(ctx *gin.Context) {
 		return
 	}
 
-	Comment := entity.Comment{
+	comment := entity.Comment{
 		UserID:  uint64(userData["id"].(float64)),
 		PhotoID: input.PhotoID,
 		Message: input.Message,
 	}
 
-	_, httpStatus, err := c.Service.Photo.GetByID(input.PhotoID)
+	photo, httpStatus, err := c.Service.Photo.GetByID(input.PhotoID)
 	if err != nil {
 		if httpStatus == http.StatusNotFound {
 			ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "photo not found"))
@@ -79,7 +79,12 @@ func (c *commentHandler) CreateComment(ctx *gin.Context) {
 		return
 	}
 
-	res, httpStatus, err := c.Service.Comment.Create(Comment)
+	if photo.UserID != comment.UserID {
+		ctx.JSON(httpStatus, helpers.APIResponse("Forbidden", http.StatusForbidden, "You are not allowed to access this photo"))
+		return
+	}
+
+	res, httpStatus, err := c.Service.Comment.Create(comment)
 	if err != nil {
 		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error"))
 		return
@@ -180,6 +185,8 @@ func (c *commentHandler) UpdateComment(ctx *gin.Context) {
 		input dto.CommentCreateUpdateReq
 	)
 
+	userData := ctx.MustGet("userData").(jwt.MapClaims)
+	userID := uint64(userData["id"].(float64))
 	ID, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
 	if err != nil {
 		err = errors.New("invalid parameter id")
@@ -202,13 +209,18 @@ func (c *commentHandler) UpdateComment(ctx *gin.Context) {
 		return
 	}
 
-	_, httpStatus, err := c.Service.Photo.GetByID(input.PhotoID)
+	photo, httpStatus, err := c.Service.Photo.GetByID(input.PhotoID)
 	if err != nil {
 		if httpStatus == http.StatusNotFound {
 			ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "photo not found"))
 			return
 		}
 		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error check photo"))
+		return
+	}
+
+	if photo.UserID != userID {
+		ctx.JSON(httpStatus, helpers.APIResponse("Forbidden", http.StatusForbidden, "You are not allowed to access this photo"))
 		return
 	}
 
