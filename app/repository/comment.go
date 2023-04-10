@@ -95,7 +95,7 @@ func (repo *commentRepo) UpdateByID(ID uint64, input dto.CommentCreateUpdateReq)
 
 func (repo *commentRepo) DeleteByID(ID uint64) (err error) {
 	Comment := entity.Comment{}
-	if err = repo.DB.Where("id = ?", ID).Take(&Comment).Error; err != nil {
+	if err = repo.DB.Where("id = ?", ID).Delete(&Comment).Error; err != nil {
 		log.Printf("[CommentRepository-DeleteByID][%v] error: %+v \n", ID, err)
 		return
 	}

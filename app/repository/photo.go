@@ -92,7 +92,7 @@ func (repo *photoRepo) UpdateByID(ID uint64, input dto.PhotoCreateUpdateReq) (re
 
 func (repo *photoRepo) DeleteByID(ID uint64) (err error) {
 	Photo := entity.Photo{}
-	if err = repo.DB.Where("id = ?", ID).Take(&Photo).Error; err != nil {
+	if err = repo.DB.Where("id = ?", ID).Delete(&Photo).Error; err != nil {
 		log.Printf("[PhotoRepository-DeleteByID][%v] error: %+v \n", ID, err)
 		return
 	}

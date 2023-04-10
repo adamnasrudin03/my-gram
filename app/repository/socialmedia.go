@@ -91,7 +91,7 @@ func (repo *socialMediaRepo) UpdateByID(ID uint64, input dto.SocialMediaUpdateRe
 
 func (repo *socialMediaRepo) DeleteByID(ID uint64) (err error) {
 	socialMedia := entity.SocialMedia{}
-	if err = repo.DB.Where("id = ?", ID).Take(&socialMedia).Error; err != nil {
+	if err = repo.DB.Where("id = ?", ID).Delete(&socialMedia).Error; err != nil {
 		log.Printf("[SocialMediaRepository-DeleteByID][%v] error: %+v \n", ID, err)
 		return
 	}
