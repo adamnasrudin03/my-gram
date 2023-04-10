@@ -69,13 +69,23 @@ func (c *commentHandler) CreateComment(ctx *gin.Context) {
 		Message: input.Message,
 	}
 
-	CommentRes, httpStatus, err := c.Service.Comment.Create(Comment)
+	_, httpStatus, err := c.Service.Photo.GetByID(input.PhotoID)
+	if err != nil {
+		if httpStatus == http.StatusNotFound {
+			ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "photo not found"))
+			return
+		}
+		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error check photo"))
+		return
+	}
+
+	res, httpStatus, err := c.Service.Comment.Create(Comment)
 	if err != nil {
 		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error"))
 		return
 	}
 
-	ctx.JSON(httpStatus, CommentRes)
+	ctx.JSON(httpStatus, res)
 }
 
 // GetAll godoc
@@ -192,13 +202,23 @@ func (c *commentHandler) UpdateComment(ctx *gin.Context) {
 		return
 	}
 
-	CommentRes, httpStatus, err := c.Service.Comment.UpdateByID(ID, input)
+	_, httpStatus, err := c.Service.Photo.GetByID(input.PhotoID)
+	if err != nil {
+		if httpStatus == http.StatusNotFound {
+			ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "photo not found"))
+			return
+		}
+		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error check photo"))
+		return
+	}
+
+	res, httpStatus, err := c.Service.Comment.UpdateByID(ID, input)
 	if err != nil {
 		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error"))
 		return
 	}
 
-	ctx.JSON(httpStatus, CommentRes)
+	ctx.JSON(httpStatus, res)
 }
 
 // DeleteComment godoc
