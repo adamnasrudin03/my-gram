@@ -81,7 +81,7 @@ func (repo *photoRepo) GetByID(ID uint64) (result entity.Photo, err error) {
 
 func (repo *photoRepo) UpdateByID(ID uint64, input dto.PhotoCreateUpdateReq) (result entity.Photo, err error) {
 	data := entity.Photo{Title: input.Title, PhotoUrl: input.PhotoUrl, Caption: input.Caption}
-	err = repo.DB.Model(&result).Where("id=?", ID).Updates(data).Error
+	err = repo.DB.Clauses(clause.Returning{}).Model(&result).Where("id=?", ID).Updates(data).Error
 	if err != nil {
 		log.Printf("[PhotoRepository-UpdateByID][%v] error: %+v \n", ID, err)
 		return result, err

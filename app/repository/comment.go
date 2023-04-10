@@ -84,7 +84,7 @@ func (repo *commentRepo) UpdateByID(ID uint64, input dto.CommentCreateUpdateReq)
 		data.PhotoID = input.PhotoID
 	}
 
-	err = repo.DB.Model(&result).Where("id=?", ID).Updates(data).Error
+	err = repo.DB.Clauses(clause.Returning{}).Model(&result).Where("id=?", ID).Updates(data).Error
 	if err != nil {
 		log.Printf("[CommentRepository-UpdateByID][%v] error: %+v \n", ID, err)
 		return result, err

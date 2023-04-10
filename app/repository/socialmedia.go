@@ -80,7 +80,7 @@ func (repo *socialMediaRepo) GetByID(ID uint64) (result entity.SocialMedia, err 
 }
 
 func (repo *socialMediaRepo) UpdateByID(ID uint64, input dto.SocialMediaUpdateReq) (result entity.SocialMedia, err error) {
-	err = repo.DB.Model(&result).Where("id=?", ID).Updates(entity.SocialMedia{Name: input.Name, SocialMediaUrl: input.SocialMediaUrl}).Error
+	err = repo.DB.Clauses(clause.Returning{}).Model(&result).Where("id=?", ID).Updates(entity.SocialMedia{Name: input.Name, SocialMediaUrl: input.SocialMediaUrl}).Error
 	if err != nil {
 		log.Printf("[SocialMediaRepository-UpdateByID][%v] error: %+v \n", ID, err)
 		return result, err
