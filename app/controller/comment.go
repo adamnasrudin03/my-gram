@@ -225,5 +225,5 @@ func (c *commentHandler) DeleteComment(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(httpStatus, helpers.APIResponse("deleted", httpStatus, "success"))
+	ctx.JSON(httpStatus, helpers.APIResponse("Deleted", httpStatus, "false"))
 }
