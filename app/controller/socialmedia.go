@@ -192,13 +192,13 @@ func (c *socialMediaHandler) UpdateSocialMedia(ctx *gin.Context) {
 		return
 	}
 
-	SocialMediaRes, httpStatus, err := c.Service.SocialMedia.UpdateByID(ID, input)
+	res, httpStatus, err := c.Service.SocialMedia.UpdateByID(ID, input)
 	if err != nil {
 		ctx.JSON(httpStatus, helpers.APIResponse(err.Error(), httpStatus, "error"))
 		return
 	}
 
-	ctx.JSON(httpStatus, SocialMediaRes)
+	ctx.JSON(httpStatus, res)
 }
 
 // DeleteSocialMedia godoc
