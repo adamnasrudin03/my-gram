@@ -52,7 +52,12 @@ func (repo *photoRepo) GetAll(ctx *gin.Context, queryparam dto.ListParam) (resul
 
 	total = uint64(totaldata)
 
-	err = query.Offset(int(offset)).Limit(int(queryparam.Limit)).Preload(clause.Associations).Find(&result).Error
+	err = query.Offset(int(offset)).Limit(int(queryparam.Limit)).
+		Preload(clause.Associations, func(db *gorm.DB) *gorm.DB {
+			return db.Select("Users.id", "Users.username", "Users.email", "Users.age",
+				"Users.created_at", "Users.updated_at")
+		}).
+		Find(&result).Error
 	if err != nil {
 		log.Printf("[PhotoRepository-GetAll] error get data: %+v \n", err)
 		return
@@ -62,11 +67,15 @@ func (repo *photoRepo) GetAll(ctx *gin.Context, queryparam dto.ListParam) (resul
 }
 
 func (repo *photoRepo) GetByID(ID uint64) (result entity.Photo, err error) {
-	if err = repo.DB.Where("id = ?", ID).Take(&result).Error; err != nil {
+	if err = repo.DB.
+		Preload(clause.Associations, func(db *gorm.DB) *gorm.DB {
+			return db.Select("Users.id", "Users.username", "Users.email", "Users.age",
+				"Users.created_at", "Users.updated_at")
+		}).Where("id = ?", ID).Take(&result).Error; err != nil {
 		log.Printf("[PhotoRepository-GetByID][%v] error: %+v \n", ID, err)
 		return result, err
 	}
-
+	result.User.Password = ""
 	return result, err
 }
 
