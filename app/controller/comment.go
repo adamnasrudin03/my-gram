@@ -39,7 +39,7 @@ func NewCommentController(srv *service.Services) CommentController {
 // @Accept json
 // @Produce json
 // @Param dto.CommentCreateUpdateReq body dto.CommentCreateUpdateReq true "Create Comment"
-// @Success 201 {object} entity.Comment
+// @Success 201 {object} dto.CommentCreateUpdateResponse
 // @Router /comments [post]
 // @Security BearerAuth
 func (c *commentHandler) CreateComment(ctx *gin.Context) {
@@ -162,7 +162,7 @@ func (c *commentHandler) GetOne(ctx *gin.Context) {
 // @Produce json
 // @Param dto.CommentCreateUpdateReq body dto.CommentCreateUpdateReq true "Update Comment"
 // @Param id path uint64 true "Comment ID"
-// @Success 200 {object} entity.Comment
+// @Success 200 {object} dto.CommentCreateUpdateResponse
 // @Router /comments/{id} [put]
 // @Security BearerAuth
 func (c *commentHandler) UpdateComment(ctx *gin.Context) {

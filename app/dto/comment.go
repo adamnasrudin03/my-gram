@@ -1,6 +1,9 @@
 package dto
 
-import "adamnasrudin03/my-gram/app/entity"
+import (
+	"adamnasrudin03/my-gram/app/entity"
+	"time"
+)
 
 type CommentCreateUpdateReq struct {
 	PhotoID uint64 `json:"photo_id"`
@@ -10,4 +13,13 @@ type CommentCreateUpdateReq struct {
 type CommentListRes struct {
 	ResponseList
 	Data []entity.Comment `json:"data"`
+}
+
+type CommentCreateUpdateResponse struct {
+	ID        uint64    `json:"id"`
+	Message   string    `json:"message"`
+	PhotoID   uint64    `json:"photo_id"`
+	UserID    uint64    `json:"user_id"`
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
 }

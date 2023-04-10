@@ -9,6 +9,21 @@ definitions:
     required:
     - message
     type: object
+  dto.CommentCreateUpdateResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      message:
+        type: string
+      photo_id:
+        type: integer
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
   dto.CommentListRes:
     properties:
       data:
@@ -50,6 +65,23 @@ definitions:
     required:
     - photo_url
     - title
+    type: object
+  dto.PhotoCreateUpdateResponse:
+    properties:
+      caption:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      photo_url:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
     type: object
   dto.PhotoListRes:
     properties:
@@ -93,6 +125,21 @@ definitions:
     required:
     - name
     - social_media_url
+    type: object
+  dto.SocialMediaCreateUpdateResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      social_media_url:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
     type: object
   dto.SocialMediaListRes:
     properties:
@@ -303,7 +350,7 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/entity.Comment'
+            $ref: '#/definitions/dto.CommentCreateUpdateResponse'
       security:
       - BearerAuth: []
       summary: CreateComment
@@ -376,7 +423,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/entity.Comment'
+            $ref: '#/definitions/dto.CommentCreateUpdateResponse'
       security:
       - BearerAuth: []
       summary: UpdateComment
@@ -427,7 +474,7 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/entity.Photo'
+            $ref: '#/definitions/dto.PhotoCreateUpdateResponse'
       security:
       - BearerAuth: []
       summary: CreatePhoto
@@ -500,7 +547,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/entity.Photo'
+            $ref: '#/definitions/dto.PhotoCreateUpdateResponse'
       security:
       - BearerAuth: []
       summary: UpdatePhoto
@@ -551,7 +598,7 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/entity.SocialMedia'
+            $ref: '#/definitions/dto.SocialMediaCreateUpdateResponse'
       security:
       - BearerAuth: []
       summary: CreateSocialMedia
@@ -624,7 +671,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/entity.SocialMedia'
+            $ref: '#/definitions/dto.SocialMediaCreateUpdateResponse'
       security:
       - BearerAuth: []
       summary: UpdateSocialMedia

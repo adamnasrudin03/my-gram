@@ -14,10 +14,10 @@ import (
 )
 
 type CommentService interface {
-	Create(input entity.Comment) (res entity.Comment, statusCode int, err error)
+	Create(input entity.Comment) (res dto.CommentCreateUpdateResponse, statusCode int, err error)
 	GetAll(ctx *gin.Context, queryparam dto.ListParam) (result dto.CommentListRes, statusCode int, err error)
 	GetByID(ID uint64) (result entity.Comment, statusCode int, err error)
-	UpdateByID(ID uint64, input dto.CommentCreateUpdateReq) (result entity.Comment, statusCode int, err error)
+	UpdateByID(ID uint64, input dto.CommentCreateUpdateReq) (result dto.CommentCreateUpdateResponse, statusCode int, err error)
 	DeleteByID(ID uint64) (statusCode int, err error)
 }
 
@@ -31,11 +31,20 @@ func NewCommentService(CommentRepo repository.CommentRepository) CommentService 
 	}
 }
 
-func (srv *commentSrv) Create(input entity.Comment) (res entity.Comment, statusCode int, err error) {
-	res, err = srv.CommentRepository.Create(input)
+func (srv *commentSrv) Create(input entity.Comment) (res dto.CommentCreateUpdateResponse, statusCode int, err error) {
+	temp, err := srv.CommentRepository.Create(input)
 	if err != nil {
 		log.Printf("[CommentService-Create] error create data: %+v \n", err)
 		return res, http.StatusInternalServerError, err
+	}
+
+	res = dto.CommentCreateUpdateResponse{
+		ID:        temp.ID,
+		Message:   temp.Message,
+		PhotoID:   temp.PhotoID,
+		UserID:    temp.UserID,
+		CreatedAt: temp.CreatedAt,
+		UpdatedAt: temp.UpdatedAt,
 	}
 
 	return res, http.StatusCreated, nil
@@ -70,7 +79,7 @@ func (srv *commentSrv) GetByID(ID uint64) (result entity.Comment, statusCode int
 	return result, http.StatusOK, nil
 }
 
-func (srv *commentSrv) UpdateByID(ID uint64, input dto.CommentCreateUpdateReq) (result entity.Comment, statusCode int, err error) {
+func (srv *commentSrv) UpdateByID(ID uint64, input dto.CommentCreateUpdateReq) (result dto.CommentCreateUpdateResponse, statusCode int, err error) {
 	sm, err := srv.CommentRepository.GetByID(ID)
 	if errors.Is(err, gorm.ErrRecordNotFound) || sm.ID == 0 {
 		return result, http.StatusNotFound, err
@@ -81,10 +90,19 @@ func (srv *commentSrv) UpdateByID(ID uint64, input dto.CommentCreateUpdateReq) (
 		return result, http.StatusInternalServerError, err
 	}
 
-	result, err = srv.CommentRepository.UpdateByID(ID, input)
+	temp, err := srv.CommentRepository.UpdateByID(ID, input)
 	if err != nil {
 		log.Printf("[CommentService-UpdateByID] error update data repo: %+v \n", err)
 		return result, http.StatusInternalServerError, err
+	}
+
+	result = dto.CommentCreateUpdateResponse{
+		ID:        temp.ID,
+		Message:   temp.Message,
+		PhotoID:   temp.PhotoID,
+		UserID:    temp.UserID,
+		CreatedAt: temp.CreatedAt,
+		UpdatedAt: temp.UpdatedAt,
 	}
 
 	return result, http.StatusOK, nil

@@ -39,7 +39,7 @@ func NewPhotoController(srv *service.Services) PhotoController {
 // @Accept json
 // @Produce json
 // @Param dto.PhotoCreateUpdateReq body dto.PhotoCreateUpdateReq true "Create Photo"
-// @Success 201 {object} entity.Photo
+// @Success 201 {object} dto.PhotoCreateUpdateResponse
 // @Router /photos [post]
 // @Security BearerAuth
 func (c *photoHandler) CreatePhoto(ctx *gin.Context) {
@@ -163,7 +163,7 @@ func (c *photoHandler) GetOne(ctx *gin.Context) {
 // @Produce json
 // @Param dto.PhotoCreateUpdateReq body dto.PhotoCreateUpdateReq true "Update Photo"
 // @Param id path uint64 true "Photo ID"
-// @Success 200 {object} entity.Photo
+// @Success 200 {object} dto.PhotoCreateUpdateResponse
 // @Router /photos/{id} [put]
 // @Security BearerAuth
 func (c *photoHandler) UpdatePhoto(ctx *gin.Context) {

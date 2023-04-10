@@ -14,10 +14,10 @@ import (
 )
 
 type PhotoService interface {
-	Create(input entity.Photo) (res entity.Photo, statusCode int, err error)
+	Create(input entity.Photo) (res dto.PhotoCreateUpdateResponse, statusCode int, err error)
 	GetAll(ctx *gin.Context, queryparam dto.ListParam) (result dto.PhotoListRes, statusCode int, err error)
 	GetByID(ID uint64) (result entity.Photo, statusCode int, err error)
-	UpdateByID(ID uint64, input dto.PhotoCreateUpdateReq) (result entity.Photo, statusCode int, err error)
+	UpdateByID(ID uint64, input dto.PhotoCreateUpdateReq) (result dto.PhotoCreateUpdateResponse, statusCode int, err error)
 	DeleteByID(ID uint64) (statusCode int, err error)
 }
 
@@ -31,11 +31,21 @@ func NewPhotoService(PhotoRepo repository.PhotoRepository) PhotoService {
 	}
 }
 
-func (srv *photoSrv) Create(input entity.Photo) (res entity.Photo, statusCode int, err error) {
-	res, err = srv.PhotoRepository.Create(input)
+func (srv *photoSrv) Create(input entity.Photo) (res dto.PhotoCreateUpdateResponse, statusCode int, err error) {
+	temp, err := srv.PhotoRepository.Create(input)
 	if err != nil {
 		log.Printf("[PhotoService-Create] error create data: %+v \n", err)
 		return res, http.StatusInternalServerError, err
+	}
+
+	res = dto.PhotoCreateUpdateResponse{
+		ID:        temp.ID,
+		UserID:    temp.UserID,
+		Title:     temp.Title,
+		PhotoUrl:  temp.PhotoUrl,
+		Caption:   temp.Caption,
+		CreatedAt: temp.CreatedAt,
+		UpdatedAt: temp.UpdatedAt,
 	}
 
 	return res, http.StatusCreated, nil
@@ -70,7 +80,7 @@ func (srv *photoSrv) GetByID(ID uint64) (result entity.Photo, statusCode int, er
 	return result, http.StatusOK, nil
 }
 
-func (srv *photoSrv) UpdateByID(ID uint64, input dto.PhotoCreateUpdateReq) (result entity.Photo, statusCode int, err error) {
+func (srv *photoSrv) UpdateByID(ID uint64, input dto.PhotoCreateUpdateReq) (result dto.PhotoCreateUpdateResponse, statusCode int, err error) {
 	sm, err := srv.PhotoRepository.GetByID(ID)
 	if errors.Is(err, gorm.ErrRecordNotFound) || sm.ID == 0 {
 		return result, http.StatusNotFound, err
@@ -81,10 +91,20 @@ func (srv *photoSrv) UpdateByID(ID uint64, input dto.PhotoCreateUpdateReq) (resu
 		return result, http.StatusInternalServerError, err
 	}
 
-	result, err = srv.PhotoRepository.UpdateByID(ID, input)
+	temp, err := srv.PhotoRepository.UpdateByID(ID, input)
 	if err != nil {
 		log.Printf("[PhotoService-UpdateByID] error update data repo: %+v \n", err)
 		return result, http.StatusInternalServerError, err
+	}
+
+	result = dto.PhotoCreateUpdateResponse{
+		ID:        temp.ID,
+		UserID:    temp.UserID,
+		Title:     temp.Title,
+		PhotoUrl:  temp.PhotoUrl,
+		Caption:   temp.Caption,
+		CreatedAt: temp.CreatedAt,
+		UpdatedAt: temp.UpdatedAt,
 	}
 
 	return result, http.StatusOK, nil

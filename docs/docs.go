@@ -167,7 +167,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/entity.Comment"
+                            "$ref": "#/definitions/dto.CommentCreateUpdateResponse"
                         }
                     }
                 }
@@ -248,7 +248,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entity.Comment"
+                            "$ref": "#/definitions/dto.CommentCreateUpdateResponse"
                         }
                     }
                 }
@@ -364,7 +364,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/entity.Photo"
+                            "$ref": "#/definitions/dto.PhotoCreateUpdateResponse"
                         }
                     }
                 }
@@ -445,7 +445,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entity.Photo"
+                            "$ref": "#/definitions/dto.PhotoCreateUpdateResponse"
                         }
                     }
                 }
@@ -561,7 +561,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/entity.SocialMedia"
+                            "$ref": "#/definitions/dto.SocialMediaCreateUpdateResponse"
                         }
                     }
                 }
@@ -642,7 +642,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entity.SocialMedia"
+                            "$ref": "#/definitions/dto.SocialMediaCreateUpdateResponse"
                         }
                     }
                 }
@@ -695,6 +695,29 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "photo_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.CommentCreateUpdateResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "photo_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
                     "type": "integer"
                 }
             }
@@ -763,6 +786,32 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.PhotoCreateUpdateResponse": {
+            "type": "object",
+            "properties": {
+                "caption": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "photo_url": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "dto.PhotoListRes": {
             "type": "object",
             "properties": {
@@ -823,6 +872,29 @@ const docTemplate = `{
                 },
                 "social_media_url": {
                     "type": "string"
+                }
+            }
+        },
+        "dto.SocialMediaCreateUpdateResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "social_media_url": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
                 }
             }
         },

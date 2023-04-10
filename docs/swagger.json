@@ -160,7 +160,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/entity.Comment"
+                            "$ref": "#/definitions/dto.CommentCreateUpdateResponse"
                         }
                     }
                 }
@@ -241,7 +241,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entity.Comment"
+                            "$ref": "#/definitions/dto.CommentCreateUpdateResponse"
                         }
                     }
                 }
@@ -357,7 +357,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/entity.Photo"
+                            "$ref": "#/definitions/dto.PhotoCreateUpdateResponse"
                         }
                     }
                 }
@@ -438,7 +438,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entity.Photo"
+                            "$ref": "#/definitions/dto.PhotoCreateUpdateResponse"
                         }
                     }
                 }
@@ -554,7 +554,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/entity.SocialMedia"
+                            "$ref": "#/definitions/dto.SocialMediaCreateUpdateResponse"
                         }
                     }
                 }
@@ -635,7 +635,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entity.SocialMedia"
+                            "$ref": "#/definitions/dto.SocialMediaCreateUpdateResponse"
                         }
                     }
                 }
@@ -688,6 +688,29 @@
                     "type": "string"
                 },
                 "photo_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.CommentCreateUpdateResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "photo_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
                     "type": "integer"
                 }
             }
@@ -756,6 +779,32 @@
                 }
             }
         },
+        "dto.PhotoCreateUpdateResponse": {
+            "type": "object",
+            "properties": {
+                "caption": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "photo_url": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "dto.PhotoListRes": {
             "type": "object",
             "properties": {
@@ -816,6 +865,29 @@
                 },
                 "social_media_url": {
                     "type": "string"
+                }
+            }
+        },
+        "dto.SocialMediaCreateUpdateResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "social_media_url": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
                 }
             }
         },

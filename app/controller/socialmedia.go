@@ -39,7 +39,7 @@ func NewSocialMediaController(srv *service.Services) SocialMediaController {
 // @Accept json
 // @Produce json
 // @Param dto.SocialMediaCreateReq body dto.SocialMediaCreateReq true "Create SocialMedia"
-// @Success 201 {object} entity.SocialMedia
+// @Success 201 {object} dto.SocialMediaCreateUpdateResponse
 // @Router /social-media [post]
 // @Security BearerAuth
 func (c *socialMediaHandler) CreateSocialMedia(ctx *gin.Context) {
@@ -162,7 +162,7 @@ func (c *socialMediaHandler) GetOne(ctx *gin.Context) {
 // @Produce json
 // @Param dto.SocialMediaUpdateReq body dto.SocialMediaUpdateReq true "Update SocialMedia"
 // @Param id path uint64 true "Social Media ID"
-// @Success 200 {object} entity.SocialMedia
+// @Success 200 {object} dto.SocialMediaCreateUpdateResponse
 // @Router /social-media/{id} [put]
 // @Security BearerAuth
 func (c *socialMediaHandler) UpdateSocialMedia(ctx *gin.Context) {

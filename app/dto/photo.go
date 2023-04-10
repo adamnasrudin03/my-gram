@@ -1,6 +1,9 @@
 package dto
 
-import "adamnasrudin03/my-gram/app/entity"
+import (
+	"adamnasrudin03/my-gram/app/entity"
+	"time"
+)
 
 type PhotoCreateUpdateReq struct {
 	Title    string `json:"title" validate:"required"`
@@ -11,4 +14,14 @@ type PhotoCreateUpdateReq struct {
 type PhotoListRes struct {
 	ResponseList
 	Data []entity.Photo `json:"data"`
+}
+
+type PhotoCreateUpdateResponse struct {
+	ID        uint64    `json:"id"`
+	Title     string    `json:"title"`
+	PhotoUrl  string    `json:"photo_url"`
+	Caption   string    `json:"caption"`
+	UserID    uint64    `json:"user_id"`
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
 }
