@@ -52,7 +52,11 @@ func (repo *commentRepo) GetAll(ctx *gin.Context, queryparam dto.ListParam) (res
 
 	total = uint64(totaldata)
 
-	err = query.Offset(int(offset)).Limit(int(queryparam.Limit)).Preload(clause.Associations).Find(&result).Error
+	err = query.Offset(int(offset)).Limit(int(queryparam.Limit)).
+		Preload(clause.Associations, func(db *gorm.DB) *gorm.DB {
+			return db.Select("Users.id", "Users.username", "Users.email", "Users.age",
+				"Users.created_at", "Users.updated_at", "Photos.*")
+		}).Find(&result).Error
 	if err != nil {
 		log.Printf("[CommentRepository-GetAll] error get data: %+v \n", err)
 		return
@@ -62,7 +66,11 @@ func (repo *commentRepo) GetAll(ctx *gin.Context, queryparam dto.ListParam) (res
 }
 
 func (repo *commentRepo) GetByID(ID uint64) (result entity.Comment, err error) {
-	if err = repo.DB.Where("id = ?", ID).Take(&result).Error; err != nil {
+	if err = repo.DB.
+		Preload(clause.Associations, func(db *gorm.DB) *gorm.DB {
+			return db.Select("Users.id", "Users.username", "Users.email", "Users.age",
+				"Users.created_at", "Users.updated_at", "Photos.*")
+		}).Where("id = ?", ID).Take(&result).Error; err != nil {
 		log.Printf("[CommentRepository-GetByID][%v] error: %+v \n", ID, err)
 		return result, err
 	}

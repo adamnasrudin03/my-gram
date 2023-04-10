@@ -52,7 +52,11 @@ func (repo *socialMediaRepo) GetAll(ctx *gin.Context, queryparam dto.ListParam) 
 
 	total = uint64(totaldata)
 
-	err = query.Offset(int(offset)).Limit(int(queryparam.Limit)).Preload(clause.Associations).Find(&result).Error
+	err = query.Offset(int(offset)).Limit(int(queryparam.Limit)).
+		Preload(clause.Associations, func(db *gorm.DB) *gorm.DB {
+			return db.Select("Users.id", "Users.username", "Users.email", "Users.age",
+				"Users.created_at", "Users.updated_at")
+		}).Find(&result).Error
 	if err != nil {
 		log.Printf("[SocialMediaRepository-GetAll] error get data: %+v \n", err)
 		return
@@ -62,7 +66,12 @@ func (repo *socialMediaRepo) GetAll(ctx *gin.Context, queryparam dto.ListParam) 
 }
 
 func (repo *socialMediaRepo) GetByID(ID uint64) (result entity.SocialMedia, err error) {
-	if err = repo.DB.Where("id = ?", ID).Take(&result).Error; err != nil {
+	if err = repo.DB.
+		Preload(clause.Associations, func(db *gorm.DB) *gorm.DB {
+			return db.Select("Users.id", "Users.username", "Users.email", "Users.age",
+				"Users.created_at", "Users.updated_at")
+		}).
+		Where("id = ?", ID).Take(&result).Error; err != nil {
 		log.Printf("[SocialMediaRepository-GetByID][%v] error: %+v \n", ID, err)
 		return result, err
 	}
