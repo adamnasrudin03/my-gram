@@ -43,23 +43,30 @@ func GetInstance() *Configs {
 
 		configs = &Configs{
 			Appconfig: AppConfig{
-				Name:      os.Getenv("APP_NAME"),
-				Env:       os.Getenv("APP_ENV"),
-				Port:      os.Getenv("APP_PORT"),
-				SecretKey: os.Getenv("JWT_SECRET"),
+				Name:      getEnv("APP_NAME", "my-gram"),
+				Env:       getEnv("APP_ENV", "dev"),
+				Port:      getEnv("APP_PORT", "8000"),
+				SecretKey: getEnv("JWT_SECRET", "MyGramSecretKey"),
 			},
 			Dbconfig: DbConfig{
-				Host:        os.Getenv("DB_HOST"),
-				Port:        os.Getenv("DB_PORT"),
-				Dbname:      os.Getenv("DB_NAME"),
-				Username:    os.Getenv("DB_USER"),
-				Password:    os.Getenv("DB_PASS"),
-				DbIsMigrate: os.Getenv("DB_ISMIGRATE") == "true",
-				DebugMode:   os.Getenv("DEBUG_MODE") == "true",
+				Host:        getEnv("DB_HOST", "localhost"),
+				Port:        getEnv("DB_PORT", "5432"),
+				Dbname:      getEnv("DB_NAME", "test_db"),
+				Username:    getEnv("DB_USER", "postgres"),
+				Password:    getEnv("DB_PASS", "postgres"),
+				DbIsMigrate: getEnv("DB_ISMIGRATE", "true") == "true",
+				DebugMode:   getEnv("DEBUG_MODE", "true") == "true",
 			},
 		}
 		lock.Unlock()
 	}
 
 	return configs
+}
+
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
 }
