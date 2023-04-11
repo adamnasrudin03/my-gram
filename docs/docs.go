@@ -12,7 +12,7 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "contact": {
             "name": "Adam Nasrudin",
-            "url": "https://github.com/adamnasrudin03",
+            "url": "https://www.linkedin.com/in/adam-nasrudin/",
             "email": "adamnasrudin858@gmail.com"
         },
         "license": {
@@ -949,7 +949,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "photo": {
-                    "$ref": "#/definitions/entity.Photo"
+                    "$ref": "#/definitions/entity.PhotoComment"
                 },
                 "photo_id": {
                     "type": "integer"
@@ -958,7 +958,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "user": {
-                    "$ref": "#/definitions/entity.User"
+                    "$ref": "#/definitions/entity.UserComment"
                 },
                 "user_id": {
                     "type": "integer"
@@ -988,6 +988,32 @@ const docTemplate = `{
                 },
                 "user": {
                     "$ref": "#/definitions/entity.User"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.PhotoComment": {
+            "type": "object",
+            "properties": {
+                "caption": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "photo_url": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
                 },
                 "user_id": {
                     "type": "integer"
@@ -1037,6 +1063,29 @@ const docTemplate = `{
                 },
                 "password": {
                     "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.UserComment": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "updated_at": {
                     "type": "string"

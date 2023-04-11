@@ -38,7 +38,7 @@ var (
 // @description     This is REST API documentation it's the final project of the training program (Scalable Web Services with Golang) organized by Kominfo x Hacktiv8
 
 // @contact.name   Adam Nasrudin
-// @contact.url    https://github.com/adamnasrudin03
+// @contact.url    https://www.linkedin.com/in/adam-nasrudin/
 // @contact.email  adamnasrudin858@gmail.com
 
 // @license.name  Apache 2.0

@@ -175,13 +175,13 @@ definitions:
       message:
         type: string
       photo:
-        $ref: '#/definitions/entity.Photo'
+        $ref: '#/definitions/entity.PhotoComment'
       photo_id:
         type: integer
       updated_at:
         type: string
       user:
-        $ref: '#/definitions/entity.User'
+        $ref: '#/definitions/entity.UserComment'
       user_id:
         type: integer
     type: object
@@ -201,6 +201,23 @@ definitions:
         type: string
       user:
         $ref: '#/definitions/entity.User'
+      user_id:
+        type: integer
+    type: object
+  entity.PhotoComment:
+    properties:
+      caption:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      photo_url:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
       user_id:
         type: integer
     type: object
@@ -238,6 +255,21 @@ definitions:
       username:
         type: string
     type: object
+  entity.UserComment:
+    properties:
+      age:
+        type: integer
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
   helpers.ResponseDefault:
     properties:
       code:
@@ -252,7 +284,7 @@ info:
   contact:
     email: adamnasrudin858@gmail.com
     name: Adam Nasrudin
-    url: https://github.com/adamnasrudin03
+    url: https://www.linkedin.com/in/adam-nasrudin/
   description: This is REST API documentation it's the final project of the training
     program (Scalable Web Services with Golang) organized by Kominfo x Hacktiv8
   license:
